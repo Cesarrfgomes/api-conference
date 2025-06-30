@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify'
-import { getOms } from '../controllers/om'
+import { getOmByNumber } from '../controllers/om'
 
 export async function orderManagementRoutes(app: FastifyInstance) {
-	app.get('/om/:id', getOms)
+	app.get('/om/:id', getOmByNumber)
 }

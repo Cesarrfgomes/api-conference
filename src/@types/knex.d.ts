@@ -4,21 +4,12 @@ declare module 'knex/types/tables' {
 	export interface Tables {
 		produto: {
 			id
-			altura_master
-			altura_unidade
 			ativo
-			camada_norma_palete
 			categoria_armazenagem_id
 			codigo
 			codigoerp
 			comprimento_master
 			comprimento_unidade
-			controla_lote
-			controla_validade
-			controle_em_metro
-			custo
-			custo_divergencia
-			data_integracao
 			descricao
 			dun
 			ean
@@ -27,9 +18,6 @@ declare module 'knex/types/tables' {
 			estoque_desconsiderado
 			exclusivo_crossdocking
 			induz_lote
-			largura_master
-			largura_unidade
-			lastro_norma_palete
 			marca
 			multiplo
 			nivel_maximo_armazenagem
@@ -42,14 +30,8 @@ declare module 'knex/types/tables' {
 			qtde_reservada
 			qtunit
 			qtunitcx
-			shel_life
-			shel_life_devolucao
-			shel_life_entrada
 			status_integracao
 			tipo_separacao
-			tolerancia_shel_life
-			tolerancia_shel_life_devolucao
-			tolerancia_shel_life_entrada
 			total_norma_palete
 			usa_lote_unico_no_picking
 			usa_picking
@@ -59,17 +41,9 @@ declare module 'knex/types/tables' {
 			data_ultimo_inventario
 			numero_ultimo_inventario
 			tem_inventario_ativo
-			usa_validade_unica_no_picking
 			usuario_id_alteracao
-			codigo_montagem
-			codigo_referencia
-			curva_acesso
-			curva_venda
 			produto_preco_id
 			fornecedor_id
-			local_produto_erp
-			enviado_wcs
-			validar_dados_logisticos
 		}
 		movimentacao: {
 			id
