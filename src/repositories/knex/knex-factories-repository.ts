@@ -15,6 +15,12 @@ export class KnexFactoriesRepository implements FactoriesRepository {
 		return factory
 	}
 
+	async findFactories() {
+		const factories = await knexOracle('TABFABRICA').select('NOME as name')
+
+		return factories
+	}
+
 	async create(data: Factory) {
 		const factories = await knexOracle('TABFABRICA')
 
