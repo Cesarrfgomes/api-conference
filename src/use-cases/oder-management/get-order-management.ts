@@ -1,6 +1,6 @@
-import { OrderManagementRepository } from '../repositories/order-management-repository'
-import { OrderManagementType } from '../types/Order-management-type'
-import { NotFoundOrderManagementError } from './errors/order-management-not-found-error'
+import { OrderManagementRepository } from '../../repositories/order-management-repository'
+import { OrderManagementType } from '../../types/Order-management-type'
+import { NotFoundOrderManagementError } from '../errors/order-management-not-found-error'
 
 interface GetOmUseCaseRequest {
 	omNumber: number

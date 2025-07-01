@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
-import { makeGetOrderManagementUseCase } from '../../use-cases/factories/make-get-order-management-use-case'
+import { makeGetOrderManagementUseCase } from '../../../use-cases/factories/make-get-order-management-use-case'
 
 export async function getOmByNumber(
 	request: FastifyRequest,

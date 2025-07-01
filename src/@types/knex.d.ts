@@ -82,10 +82,7 @@ declare module 'knex/types/tables' {
 			numero_caixa_et
 			numero_carga
 			numero_conferencia_entrada
-			numero_et
 			numeroom
-			numeroop
-			numero_palete
 			numero_pedido
 			numero_sequencia_entrega
 			numero_sequencia_montagem
@@ -119,6 +116,19 @@ declare module 'knex/types/tables' {
 			mapa_separacao_id
 			produto_id
 			data_embarque_palete
+		}
+		usuario: {
+			id
+			ativo
+			chapaerp
+			login
+			nome
+			senha
+		}
+		deposito_conferencia: {
+			id
+			deposito
+			usuario_id
 		}
 	}
 }

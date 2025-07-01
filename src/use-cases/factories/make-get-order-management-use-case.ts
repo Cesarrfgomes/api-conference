@@ -1,8 +1,8 @@
-import { OrderManagementKnexRepository } from '../../repositories/knex/order-management-knex-repository'
-import { GetOmUseCase } from '../get-order-management'
+import { KnexOrderManagementRepository } from '../../repositories/knex/order-management-knex-repository'
+import { GetOmUseCase } from '../oder-management/get-order-management'
 
 export function makeGetOrderManagementUseCase() {
-	const knexOmRepository = new OrderManagementKnexRepository()
+	const knexOmRepository = new KnexOrderManagementRepository()
 	const service = new GetOmUseCase(knexOmRepository)
 
 	return service
