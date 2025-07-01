@@ -1,11 +1,11 @@
-import { knex } from '../../config/databases/postgres'
+import { knexPg } from '../../config/databases/postgres'
 import { OrderManagementRepository } from '../order-management-repository'
 
 export class KnexOrderManagementRepository
 	implements OrderManagementRepository
 {
 	async findOmByNumber(omNumber: number) {
-		const omByNumOm = await knex('movimentacao')
+		const omByNumOm = await knexPg('movimentacao')
 			.select(
 				'produto.codigo as codprod',
 				'qt',

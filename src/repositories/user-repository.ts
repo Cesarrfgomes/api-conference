@@ -1,5 +1,7 @@
-import { UserType } from '../types/User-type'
+import { UserWinthorType } from '../types/User-type'
 
 export interface UserRepository {
-	findUserByUsername(username: string): Promise<UserType | null>
+	findWitnhorUserById(userId: number): Promise<UserWinthorType | null>
+	findWinthorUserByUsername(username: string): Promise<UserWinthorType | null>
+	getWinthorUserPasswordByUsername(username: string): Promise<string | null>
 }

@@ -1,14 +1,58 @@
-import { knex } from '../../config/databases/postgres'
+import { knexOracle } from '../../config/databases/oracle'
+import { UserWinthorType } from '../../types/User-type'
 import { UserRepository } from '../user-repository'
 
 export class KnexUserRepository implements UserRepository {
-	async findUserByUsername(username: string) {
-		const user = await knex('usuario').where('login', username).first()
+	async findWitnhorUserById(userId: number): Promise<UserWinthorType | null> {
+		const user = await knexOracle('PCEMPR')
+			.select(
+				'MATRICULA as matricula',
+				'NOME as nome',
+				'SENHABD as senhabd',
+				'USUARIOBD as usuariobd'
+			)
+			.where('MATRICULA', userId)
+			.first()
 
 		if (!user) {
 			return null
 		}
 
 		return user
+	}
+
+	async findWinthorUserByUsername(username: string) {
+		const user = await knexOracle('PCEMPR')
+			.select(
+				'MATRICULA as matricula',
+				'NOME as nome',
+				'SENHABD as senhabd',
+				'USUARIOBD as usuariobd'
+			)
+			.where('USUARIOBD', username)
+			.first()
+
+		if (!user) {
+			return null
+		}
+
+		return user
+	}
+
+	async getWinthorUserPasswordByUsername(username: string) {
+		const user = await knexOracle.raw(
+			`
+            SELECT DECRYPT(SENHABD, ?) as password
+            FROM PCEMPR
+            WHERE Upper(LTrim(RTrim(USUARIOBD))) = ?
+            `,
+			[username, username]
+		)
+
+		if (!user) {
+			return null
+		}
+
+		return user[0].PASSWORD
 	}
 }

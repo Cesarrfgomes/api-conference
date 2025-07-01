@@ -7,7 +7,13 @@ const envSchema = z.object({
 	PG_PORT: z.coerce.number(),
 	PG_USER: z.string(),
 	PG_NAME: z.string(),
-	PG_PASS: z.string()
+	PG_PASS: z.string(),
+	ORACLE_HOST: z.string(),
+	ORACLE_PORT: z.coerce.number(),
+	ORACLE_USER: z.string(),
+	ORACLE_NAME: z.string(),
+	ORACLE_PASS: z.string(),
+	JWT_SECRET: z.string()
 })
 
 const _env = envSchema.safeParse(process.env)

@@ -130,5 +130,41 @@ declare module 'knex/types/tables' {
 			deposito
 			usuario_id
 		}
+		PCEMPR: {
+			matricula: number
+			nome: string
+			usuariobd: string
+			senhabd: string
+		}
+		PCCONTRO: {
+			codusuario: number
+			codrotina: number
+			acesso: string
+		}
+		TABFABRICA: {
+			CODFABRICA: number
+			NOME: string
+			ICMS: number
+			ST: number
+			MARGEMF6: number
+			MARGEMF2A: number
+			MARGEMF2V: number
+			ATIVO: string
+		}
+		TABCALCULOFABRICA: {
+			PRODDUTO: string
+			FABRICA: string
+			STFABRICA: number
+			ICMSFABRICA: number
+			MARGEMF6: number
+			MARGEMF2VRJ: number
+			MARGEMF2ATC: number
+			PBASEF6: number
+			PVENDAF6: number
+			PVENDAF2ATC: number
+			PVENDAF2VRJ: number
+			DTINCLUSAO: Date
+			CODFUNC
+		}
 	}
 }
