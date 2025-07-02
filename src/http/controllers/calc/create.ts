@@ -31,7 +31,14 @@ export async function calcProductPrice(
 			userId: request.user.sub
 		})
 
-		return reply.status(200).send({ filial2A, filial2V, filial6 })
+		return reply
+			.status(200)
+			.send({
+				filial2A,
+				filial2V,
+				filial6,
+				message: 'Cálculo realizado com sucesso!'
+			})
 	} catch (err) {
 		console.error(err)
 
