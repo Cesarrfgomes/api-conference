@@ -6,7 +6,9 @@ import { verifyUserRoutineAccess } from '../../middlewares/verify-user-routine-a
 export async function calcProductPriceRoutes(app: FastifyInstance) {
 	app.post(
 		'/calc',
-		{ onRequest: [verifyJWT, verifyUserRoutineAccess(9816)] },
+		{
+			onRequest: [verifyJWT, verifyUserRoutineAccess(9816)]
+		},
 		calcProductPrice
 	)
 }

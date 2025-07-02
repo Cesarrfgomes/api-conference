@@ -1,5 +1,6 @@
 import { knexOracle } from '../../config/databases/oracle'
-import { UserWinthorType } from '../../types/User-type'
+import { knexPg } from '../../config/databases/postgres'
+import { UserKaizenType, UserWinthorType } from '../../types/User-type'
 import { UserRepository } from '../user-repository'
 
 export class KnexUserRepository implements UserRepository {
@@ -19,6 +20,29 @@ export class KnexUserRepository implements UserRepository {
 		}
 
 		return user
+	}
+
+	async findKaizenUserByErpCode(
+		erpcode: number
+	): Promise<UserKaizenType | null> {
+		const user = await knexPg('usuario')
+			.select('id', 'ativo', 'chapaerp', 'login', 'nome')
+			.where('chapaerp', erpcode)
+			.first()
+
+		if (!user) {
+			return null
+		}
+
+		return user
+	}
+
+	async findUserDepositsByKaizenId(userId: number) {
+		const deposits = await knexPg('deposito_conferencia')
+			.select('deposito')
+			.where('usuario_id', userId)
+
+		return deposits
 	}
 
 	async findWinthorUserByUsername(username: string) {

@@ -4,7 +4,7 @@ export type UserKaizenType = {
 	chapaerp: number
 	login: string
 	nome: string
-	senha: string
+	senha?: string
 }
 
 export type UserWinthorType = {

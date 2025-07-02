@@ -118,17 +118,22 @@ declare module 'knex/types/tables' {
 			data_embarque_palete
 		}
 		usuario: {
-			id
-			ativo
-			chapaerp
-			login
-			nome
-			senha
+			id: number
+			ativo: string
+			chapaerp: number
+			login: string
+			nome: string
+			senha: string
 		}
 		deposito_conferencia: {
-			id
-			deposito
-			usuario_id
+			id: number
+			deposito: number
+			usuario_id: number
+		}
+		endereco: {
+			id: number
+			deposito: number
+			ativo: string
 		}
 		PCEMPR: {
 			matricula: number

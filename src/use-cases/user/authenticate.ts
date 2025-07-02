@@ -1,5 +1,5 @@
 import { UserRepository } from '../../repositories/user-repository'
-import { UserWinthorType } from '../../types/User-type'
+import { UserKaizenType, UserWinthorType } from '../../types/User-type'
 import { InvalidCredentialsError } from '../errors/invalid-credentials-error'
 
 interface AuthenticateUseCaseRequest {
@@ -8,7 +8,8 @@ interface AuthenticateUseCaseRequest {
 }
 
 interface AuthenticateUseCaseResponse {
-	user: UserWinthorType
+	winthorUser: UserWinthorType
+	kaizenUser: UserKaizenType | null
 }
 export class AuthenticateUseCase {
 	constructor(private usersRepository: UserRepository) {}
@@ -17,16 +18,15 @@ export class AuthenticateUseCase {
 		username,
 		password
 	}: AuthenticateUseCaseRequest): Promise<AuthenticateUseCaseResponse> {
-		const user = await this.usersRepository.findWinthorUserByUsername(
-			username
-		)
+		const winthorUser =
+			await this.usersRepository.findWinthorUserByUsername(username)
 
 		const decryptPassword =
 			await this.usersRepository.getWinthorUserPasswordByUsername(
 				username
 			)
 
-		if (!user) {
+		if (!winthorUser) {
 			throw new InvalidCredentialsError()
 		}
 
@@ -36,6 +36,10 @@ export class AuthenticateUseCase {
 			throw new InvalidCredentialsError()
 		}
 
-		return { user }
+		const kaizenUser = await this.usersRepository.findKaizenUserByErpCode(
+			winthorUser.matricula
+		)
+
+		return { winthorUser, kaizenUser }
 	}
 }

@@ -10,11 +10,22 @@ export class KnexOrderManagementRepository
 				'produto.codigo as codprod',
 				'qt',
 				'qtseparada',
-				'qtconferida'
+				'qtconferida',
+				'endereco_id'
 			)
 			.join('produto', 'movimentacao.produto_id', 'produto.id')
 			.where('numeroom', omNumber)
 
 		return omByNumOm
+	}
+
+	async findOmDepositsByAddressId(addressId: number[]) {
+		const deposits = await knexPg('endereco')
+			.select('deposito')
+			.distinct()
+			.whereIn('id', addressId)
+			.first()
+
+		return deposits
 	}
 }
