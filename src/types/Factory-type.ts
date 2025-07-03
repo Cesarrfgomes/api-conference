@@ -1,10 +1,10 @@
 export type Factory = {
-	CODFABRICA?: number
-	NOME: string
-	ICMS: number
-	ST: number
-	MARGEMF6: number
-	MARGEMF2A: number
-	MARGEMF2V: number
-	ATIVO?: string
+	factoryCode?: number
+	name: string
+	icms: number
+	st: number
+	marginf6: number
+	marginf2a: number
+	marginf2v: number
+	active?: string
 }

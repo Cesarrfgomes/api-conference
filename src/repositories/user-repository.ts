@@ -1,7 +1,7 @@
 import { UserKaizenType, UserWinthorType } from '../types/User-type'
 
 export interface UserRepository {
-	findWitnhorUserById(userId: number): Promise<UserWinthorType | null>
+	findWinthorUserById(userId: number): Promise<UserWinthorType | null>
 	findKaizenUserByErpCode(erpcode: number): Promise<UserKaizenType | null>
 	findUserDepositsByKaizenId(
 		userId: number

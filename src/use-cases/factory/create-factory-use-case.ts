@@ -34,12 +34,12 @@ export class CreateFactoryUseCase {
 		}
 
 		const factory = await this.factoriesRepository.create({
-			NOME: name,
-			ICMS: icms,
-			ST: st,
-			MARGEMF2A: marginF2A,
-			MARGEMF6: marginF6,
-			MARGEMF2V: marginF2V
+			name,
+			icms,
+			st,
+			marginf6: marginF6,
+			marginf2a: marginF2A,
+			marginf2v: marginF2V
 		})
 
 		return {

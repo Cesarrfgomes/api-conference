@@ -41,32 +41,34 @@ export class CreateCalcProductPrice {
 			throw new NotFoundFactoryError()
 		}
 
-		const calcbaseF6 =
+		const baseCalcF6 =
 			initialPrice +
 			initialPrice * (percIpi / 100) +
 			(shippingPrice / 1000) * weight
 
-		const calcF6 = calcbaseF6 + calcbaseF6 * (factoryExists.MARGEMF6 / 100)
+		const calcF6 = baseCalcF6 + baseCalcF6 * (factoryExists.marginf6 / 100)
 
 		const calcF2A =
-			calcbaseF6 + calcbaseF6 * (factoryExists.MARGEMF2A / 100)
+			baseCalcF6 + baseCalcF6 * (factoryExists.marginf2a / 100)
 
 		const calcF2V =
-			calcbaseF6 + calcbaseF6 * (factoryExists.MARGEMF2V / 100)
+			baseCalcF6 + baseCalcF6 * (factoryExists.marginf2v / 100)
+
+		console.log(factoryExists.icms)
 
 		await this.calcProductPriceRepository.create({
-			CODFUNC: userId,
-			PRODDUTO: product,
-			FABRICA: factory,
-			MARGEMF2ATC: factoryExists.MARGEMF2A,
-			MARGEMF2VRJ: factoryExists.MARGEMF2V,
-			MARGEMF6: factoryExists.MARGEMF6,
-			PBASEF6: calcbaseF6,
-			PVENDAF2ATC: Number(calcF2A.toFixed(2)),
-			PVENDAF2VRJ: Number(calcF2V.toFixed(2)),
-			PVENDAF6: Number(calcF6.toFixed(2)),
-			STFABRICA: factoryExists.ST,
-			ICMSFABRICA: factoryExists.ICMS
+			employee: userId,
+			product: product,
+			factory: factory,
+			marginF2A: factoryExists.marginf2a,
+			marginF2V: factoryExists.marginf2v,
+			marginF6: factoryExists.marginf6,
+			basePriceF6: baseCalcF6,
+			priceF2A: Number(calcF2A.toFixed(2)),
+			priceF2V: Number(calcF2V.toFixed(2)),
+			priceF6: Number(calcF6.toFixed(2)),
+			factorySt: factoryExists.st,
+			factoryIcms: factoryExists.icms
 		})
 
 		return {

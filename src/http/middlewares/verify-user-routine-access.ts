@@ -6,14 +6,14 @@ export function verifyUserRoutineAccess(routine: number) {
 		const { sub } = request.user
 
 		const doesUserHaveRoutineAccess = await knexOracle('PCCONTRO')
-			.select('ACESSO as acesso')
+			.select('ACESSO as access')
 			.where('CODROTINA', routine)
 			.where('CODUSUARIO', sub)
 			.first()
 
 		if (
-			!doesUserHaveRoutineAccess?.acesso ||
-			doesUserHaveRoutineAccess.acesso === 'N'
+			!doesUserHaveRoutineAccess?.access ||
+			doesUserHaveRoutineAccess.access === 'N'
 		) {
 			return reply.status(401).send({
 				message: 'Usuário não tem permissão de acesso à rotina.'

@@ -4,13 +4,13 @@ import { UserKaizenType, UserWinthorType } from '../../types/User-type'
 import { UserRepository } from '../user-repository'
 
 export class KnexUserRepository implements UserRepository {
-	async findWitnhorUserById(userId: number): Promise<UserWinthorType | null> {
+	async findWinthorUserById(userId: number): Promise<UserWinthorType | null> {
 		const user = await knexOracle('PCEMPR')
 			.select(
-				'MATRICULA as matricula',
-				'NOME as nome',
-				'SENHABD as senhabd',
-				'USUARIOBD as usuariobd'
+				'MATRICULA as winthorUserId',
+				'NOME as name',
+				'USUARIOBD as winthorUsername',
+				'SENHABD as password'
 			)
 			.where('MATRICULA', userId)
 			.first()
@@ -26,7 +26,13 @@ export class KnexUserRepository implements UserRepository {
 		erpcode: number
 	): Promise<UserKaizenType | null> {
 		const user = await knexPg('usuario')
-			.select('id', 'ativo', 'chapaerp', 'login', 'nome')
+			.select(
+				'id as kaizenUserId',
+				'chapaerp as winthorUserId',
+				'nome as name',
+				'login as kaizenUsername',
+				'ativo as isActive'
+			)
 			.where('chapaerp', erpcode)
 			.first()
 
@@ -48,10 +54,10 @@ export class KnexUserRepository implements UserRepository {
 	async findWinthorUserByUsername(username: string) {
 		const user = await knexOracle('PCEMPR')
 			.select(
-				'MATRICULA as matricula',
-				'NOME as nome',
-				'SENHABD as senhabd',
-				'USUARIOBD as usuariobd'
+				'MATRICULA as winthorUserId',
+				'NOME as name',
+				'USUARIOBD as winthorUsername',
+				'SENHABD as password'
 			)
 			.where('USUARIOBD', username)
 			.first()

@@ -37,7 +37,7 @@ export class AuthenticateUseCase {
 		}
 
 		const kaizenUser = await this.usersRepository.findKaizenUserByErpCode(
-			winthorUser.matricula
+			winthorUser.winthorUserId
 		)
 
 		return { winthorUser, kaizenUser }

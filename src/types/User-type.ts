@@ -1,15 +1,15 @@
 export type UserKaizenType = {
-	id: number
-	ativo: string
-	chapaerp: number
-	login: string
-	nome: string
-	senha?: string
+	kaizenUserId: number
+	isActive: string
+	winthorUserId: number
+	kaizenUsername: string
+	name: string
+	password?: string
 }
 
 export type UserWinthorType = {
-	matricula: number
-	nome: string
-	usuariobd: string
-	senhabd: string
+	winthorUserId: number
+	name: string
+	winthorUsername: string
+	password: string
 }

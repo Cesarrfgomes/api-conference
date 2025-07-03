@@ -25,8 +25,8 @@ export async function authenticate(
 		})
 
 		const token = await reply.jwtSign({
-			sub: winthorUser.matricula,
-			kaizenId: kaizenUser?.id
+			sub: winthorUser.winthorUserId,
+			kaizenId: kaizenUser?.kaizenUserId
 		})
 
 		return reply.status(200).send({ winthorUser, kaizenUser, token })
