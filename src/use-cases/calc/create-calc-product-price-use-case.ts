@@ -54,8 +54,6 @@ export class CreateCalcProductPrice {
 		const calcF2V =
 			baseCalcF6 + baseCalcF6 * (factoryExists.marginf2v / 100)
 
-		console.log(factoryExists.icms)
-
 		await this.calcProductPriceRepository.create({
 			employee: userId,
 			product: product,

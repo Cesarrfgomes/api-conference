@@ -1,3 +1,4 @@
+import { TCalc } from '../types/Calc-type'
 import { Factory } from '../types/Factory-type'
 
 export interface CreateCalc {
@@ -17,5 +18,8 @@ export interface CreateCalc {
 }
 
 export interface CalcProductPriceRepository {
+	findUserCalc(): Promise<TCalc[]>
+	findUserCalcById(id: number): Promise<TCalc | null>
 	create(data: CreateCalc): Promise<void>
+	delete(id: number): Promise<void>
 }

@@ -23,7 +23,7 @@ export class KnexUserRepository implements UserRepository {
 	}
 
 	async findKaizenUserByErpCode(
-		erpcode: number
+		winthorUserId: number
 	): Promise<UserKaizenType | null> {
 		const user = await knexPg('usuario')
 			.select(
@@ -33,7 +33,7 @@ export class KnexUserRepository implements UserRepository {
 				'login as kaizenUsername',
 				'ativo as isActive'
 			)
-			.where('chapaerp', erpcode)
+			.where('chapaerp', winthorUserId)
 			.first()
 
 		if (!user) {

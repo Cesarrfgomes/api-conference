@@ -2,7 +2,9 @@ import { UserKaizenType, UserWinthorType } from '../types/User-type'
 
 export interface UserRepository {
 	findWinthorUserById(userId: number): Promise<UserWinthorType | null>
-	findKaizenUserByErpCode(erpcode: number): Promise<UserKaizenType | null>
+	findKaizenUserByErpCode(
+		winthorUserId: number
+	): Promise<UserKaizenType | null>
 	findUserDepositsByKaizenId(
 		userId: number
 	): Promise<Pick<{ deposito: number }, 'deposito'>[]>
