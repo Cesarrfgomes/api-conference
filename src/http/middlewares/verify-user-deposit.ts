@@ -15,6 +15,4 @@ export async function verifyUserDepositAccess(
 	if (userDeposits.length === 0) {
 		throw new NotFoundUserDepositsError()
 	}
-
-	console.log(userDeposits)
 }

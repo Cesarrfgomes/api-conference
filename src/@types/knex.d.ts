@@ -172,5 +172,10 @@ declare module 'knex/types/tables' {
 			DTINCLUSAO: Date
 			CODFUNC
 		}
+		TABCRACHA: {
+			CRACHA: string
+			MATRICULA: number
+			LOCALSEPARACAO: string
+		}
 	}
 }

@@ -18,7 +18,7 @@ interface CreateCalcProductPriceResponse {
 	filial6: string
 }
 
-export class CreateCalcProductPrice {
+export class CreateCalcProductPriceUseCase {
 	constructor(
 		private factoriesRepository: FactoriesRepository,
 		private calcProductPriceRepository: CalcProductPriceRepository

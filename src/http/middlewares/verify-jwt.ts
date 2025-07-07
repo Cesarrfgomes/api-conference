@@ -1,4 +1,4 @@
-import { FastifyReply, FastifyRequest } from 'fastify'
+import { FastifyError, FastifyReply, FastifyRequest } from 'fastify'
 
 export const verifyJWT = async (
 	request: FastifyRequest,
@@ -6,7 +6,21 @@ export const verifyJWT = async (
 ) => {
 	try {
 		await request.jwtVerify()
-	} catch (error) {
-		return reply.status(401).send({ message: 'Unauthorized.' })
+	} catch (err: FastifyError) {
+		if (err.code === 'FST_JWT_AUTHORIZATION_TOKEN_EXPIRED') {
+			return reply.status(401).send({
+				message: err.message,
+				code: err.code,
+				statusCode: err.statusCode
+			})
+		} else if (err.code === 'FST_JWT_NO_AUTHORIZATION_IN_HEADER') {
+			return reply.status(401).send({
+				message: err.message,
+				code: err.code,
+				statusCode: err.statusCode
+			})
+		} else {
+			return reply.status(403).send({ message: 'Unauthorized.' })
+		}
 	}
 }

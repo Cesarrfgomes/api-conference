@@ -12,5 +12,5 @@ export type TCalc = {
 	priceF2A: number
 	priceF2V: number
 	employee: number
-	insertDate: string
+	createdAt: string
 }

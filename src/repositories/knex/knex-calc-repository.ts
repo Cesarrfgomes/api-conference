@@ -1,33 +1,37 @@
 import _ from 'lodash'
 import { knexOracle } from '../../config/databases/oracle'
 import { CalcProductPriceRepository, CreateCalc } from '../calc-repository'
-import { TCalc } from '../../types/Calc-type'
 
 export class KnexCalcProductPriceRepository
 	implements CalcProductPriceRepository
 {
-	async findUserCalc() {
-		const calcs = await knexOracle('TABCALCULOFABRICA').select(
-			'ID as id',
-			'FABRICA as factory',
-			'PRODUTO as product',
-			'ICMSFABRICA as factoryIcms',
-			'STFABRICA as factorySt',
-			'PBASEF6 as basePriceF6',
-			'MARGEMF6 as marginF6',
-			'MARGEMF2ATC as marginF2A',
-			'MARGEMF2VRJ as marginF2V',
-			'PVENDAF6 as priceF6',
-			'PVENDAF2ATC as priceF2A',
-			'PVENDAF2VRJ as priceF2V',
-			'CODFUNC as employee',
-			'DTINCLUSAO as insertDate'
-		)
+	async findUserCalcsByUserId(winthorUserId: number, page: number) {
+		const calcs = await knexOracle('TABCALCULOFABRICA')
+			.select(
+				'ID as id',
+				'FABRICA as factory',
+				'PRODUTO as product',
+				'ICMSFABRICA as factoryIcms',
+				'STFABRICA as factorySt',
+				'PBASEF6 as basePriceF6',
+				'MARGEMF6 as marginF6',
+				'MARGEMF2ATC as marginF2A',
+				'MARGEMF2VRJ as marginF2V',
+				'PVENDAF6 as priceF6',
+				'PVENDAF2ATC as priceF2A',
+				'PVENDAF2VRJ as priceF2V',
+				'CODFUNC as employee',
+				'DTINCLUSAO as createdAt'
+			)
+			.where('CODFUNC', winthorUserId)
+			.limit(10)
+			.offset((page - 1) * 10)
+			.orderBy('ID', 'desc')
 
 		return calcs
 	}
 
-	async findUserCalcById(id: number) {
+	async findUserCalcById(id: number, winthorUserId: number) {
 		const calc = await knexOracle('TABCALCULOFABRICA')
 			.select(
 				'ID as id',
@@ -43,9 +47,9 @@ export class KnexCalcProductPriceRepository
 				'PVENDAF2ATC as priceF2A',
 				'PVENDAF2VRJ as priceF2V',
 				'CODFUNC as employee',
-				'DTINCLUSAO as insertDate'
+				'DTINCLUSAO as createdAt'
 			)
-			.where('ID', id)
+			.where({ ID: id, CODFUNC: winthorUserId })
 			.first()
 
 		if (!calc) {

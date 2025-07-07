@@ -1,5 +1,4 @@
 import { TCalc } from '../types/Calc-type'
-import { Factory } from '../types/Factory-type'
 
 export interface CreateCalc {
 	product: string
@@ -14,12 +13,12 @@ export interface CreateCalc {
 	priceF2A: number
 	priceF2V: number
 	employee: number
-	insertDate?: Date
+	createdAt?: Date
 }
 
 export interface CalcProductPriceRepository {
-	findUserCalc(): Promise<TCalc[]>
-	findUserCalcById(id: number): Promise<TCalc | null>
+	findUserCalcsByUserId(winthorUserId: number, page: number): Promise<TCalc[]>
+	findUserCalcById(id: number, winthorUserId: number): Promise<TCalc | null>
 	create(data: CreateCalc): Promise<void>
 	delete(id: number): Promise<void>
 }

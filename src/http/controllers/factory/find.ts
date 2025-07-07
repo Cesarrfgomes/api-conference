@@ -1,7 +1,4 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { z } from 'zod'
-import { makeCreateFactoryUseCase } from '../../../use-cases/factories/make-create-factory-use-case'
-import { FactoryAlreadyExistsError } from '../../../use-cases/errors/factory-already-exists-error'
 import { makeFindFactoriesUseCase } from '../../../use-cases/factories/make-find-factories-use-case'
 
 export async function findFactories(

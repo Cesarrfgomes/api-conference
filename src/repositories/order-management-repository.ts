@@ -4,11 +4,5 @@ export interface OrderManagementRepository {
 	findOmByNumber(omNumber: number): Promise<OrderManagementType[]>
 	findOmDepositsByAddressId(
 		addressId: number[]
-	): Promise<
-		| Pick<
-				{ id: number; deposito: number; ativo: string },
-				'id' | 'deposito' | 'ativo'
-		  >
-		| undefined
-	>
+	): Promise<Pick<{ deposit: number }, 'deposit'> | undefined>
 }

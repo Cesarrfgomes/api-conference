@@ -20,3 +20,4 @@ Papa Materiais app.
 
 -   [x] Os dados da aplicação precisam ser estar persistidos em bancos de PostgreSQL e Oracle;
 -   [x] O usuário deve ser identificado por um JWT (JSON Web Token);
+-   [ ] Todas as listas de dados precisam estar páginadas com 20 itens por páginas;

@@ -31,14 +31,14 @@ export class GetOmUseCase {
 
 		const omDeposits =
 			await this.orderManagementRepository.findOmDepositsByAddressId(
-				om.map(item => item.endereco_id)
+				om.map(item => item.addressId)
 			)
 
 		const usersDeposits =
 			await this.usersRepository.findUserDepositsByKaizenId(userKaizenId)
 
 		const doesUserHaveOmDeposit = usersDeposits.find(
-			item => item.deposito === omDeposits?.deposito
+			item => item.deposit === omDeposits?.deposit
 		)
 
 		if (!doesUserHaveOmDeposit) {
