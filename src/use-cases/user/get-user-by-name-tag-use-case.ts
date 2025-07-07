@@ -3,31 +3,34 @@ import { UserKaizenType, UserWinthorType } from '../../types/User-type'
 import { NotFoundUserError } from '../errors/user-not-found-error'
 
 interface GetUserByNameTagRequest {
-	nameTag: string
+	nameTags: string
 }
 
 interface GetUserByNameTagResponse {
-	winthorUser: UserWinthorType
-	kaizenUser: UserKaizenType | null
+	winthorUserId: UserWinthorType[]
 }
 export class GetUserByNameTagUseCase {
 	constructor(private usersRepository: UserRepository) {}
 
 	async execute({
-		nameTag
+		nameTags
 	}: GetUserByNameTagRequest): Promise<GetUserByNameTagResponse> {
-		const winthorUser = await this.usersRepository.findUserByNameTag(
-			nameTag
+		const winthorUserId = await this.usersRepository.findUserByNameTag(
+			nameTags
 		)
 
-		if (!winthorUser) {
+		console.log(winthorUserId)
+
+		if (!winthorUserId) {
 			throw new NotFoundUserError()
 		}
 
-		const kaizenUser = await this.usersRepository.findKaizenUserByErpCode(
-			winthorUser.winthorUserId
-		)
+		// const kaizenUser = await this.usersRepository.findKaizenUserByErpCode(
+		// 	winthorUser.winthorUserId
+		// )
 
-		return { winthorUser, kaizenUser }
+		return {
+			winthorUserId
+		}
 	}
 }

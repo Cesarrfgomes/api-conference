@@ -18,11 +18,11 @@ export async function getUserByNameTag(
 		try {
 			const getUser = makeGetUserByNameTagUseCase()
 
-			const { winthorUser, kaizenUser } = await getUser.execute({
-				nameTag: nameTags
+			const { winthorUserId } = await getUser.execute({
+				nameTags
 			})
 
-			return reply.status(200).send({ winthorUser, kaizenUser })
+			return reply.status(200).send({ winthorUserId })
 		} catch (err) {
 			if (err instanceof InvalidCredentialsError) {
 				return reply.status(400).send({ message: err.message })

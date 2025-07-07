@@ -4,18 +4,16 @@ import { UserKaizenType, UserWinthorType } from '../../types/User-type'
 import { UserRepository } from '../user-repository'
 
 export class KnexUserRepository implements UserRepository {
-	async findUserByNameTag(nameTag: string): Promise<UserWinthorType | null> {
+	async findUserByNameTag(nameTags: string): Promise<UserWinthorType[]> {
+		const nameTagsArray = nameTags.split(',')
+
 		const user = await knexOracle('TABCRACHA')
 			.select('MATRICULA as winthorUserId')
-			.where('CRACHA', nameTag)
-			.first()
-
-		if (!user) {
-			return null
-		}
+			.whereIn('CRACHA', nameTagsArray)
 
 		return user
 	}
+
 	async findWinthorUserById(userId: number): Promise<UserWinthorType | null> {
 		const user = await knexOracle('PCEMPR')
 			.select(
