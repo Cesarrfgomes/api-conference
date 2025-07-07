@@ -32,6 +32,10 @@ export class AuthenticateUseCase {
 			throw new InvalidCredentialsError()
 		}
 
-		return { user }
+		const { senha: _, ...userWithOutPassword } = user
+
+		return {
+			user: userWithOutPassword
+		}
 	}
 }

@@ -4,5 +4,10 @@ export type UserType = {
 	chapaerp: number
 	login: string
 	nome: string
-	senha: string
+	senha?: string
+}
+
+export type UserDepositsType = {
+	deposito: number
+	usuario_id: number
 }
