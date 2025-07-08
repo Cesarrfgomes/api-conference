@@ -1,5 +1,5 @@
 import { UserRepository } from '../../repositories/user-repository'
-import { UserKaizenType, UserWinthorType } from '../../types/User-type'
+import { UserWinthorType } from '../../types/User-type'
 import { NotFoundUserError } from '../errors/user-not-found-error'
 
 interface GetUserByNameTagRequest {
@@ -7,7 +7,7 @@ interface GetUserByNameTagRequest {
 }
 
 interface GetUserByNameTagResponse {
-	winthorUserId: UserWinthorType[]
+	users: UserWinthorType[]
 }
 export class GetUserByNameTagUseCase {
 	constructor(private usersRepository: UserRepository) {}
@@ -15,18 +15,20 @@ export class GetUserByNameTagUseCase {
 	async execute({
 		nameTags
 	}: GetUserByNameTagRequest): Promise<GetUserByNameTagResponse> {
-		const winthorUserId = await this.usersRepository.findUserByNameTag(
-			nameTags
-		)
+		// if (nameTags.length > 2) {
+		// 	throw new MaximumUsersInAPartitionError()
+		// }
 
-		console.log(winthorUserId)
+		const users = await this.usersRepository.findUserByNameTag(nameTags)
 
-		if (!winthorUserId) {
+		console.log(users)
+
+		if (!users) {
 			throw new NotFoundUserError()
 		}
 
 		return {
-			winthorUserId
+			users
 		}
 	}
 }
