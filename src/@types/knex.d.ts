@@ -118,17 +118,64 @@ declare module 'knex/types/tables' {
 			data_embarque_palete
 		}
 		usuario: {
-			id
-			ativo
-			chapaerp
-			login
-			nome
-			senha
+			id: number
+			ativo: string
+			chapaerp: number
+			login: string
+			nome: string
+			senha: string
 		}
 		deposito_conferencia: {
-			id
-			deposito
-			usuario_id
+			id: number
+			deposito: number
+			usuario_id: number
+		}
+		endereco: {
+			id: number
+			deposito: number
+			ativo: string
+		}
+		PCEMPR: {
+			matricula: number
+			nome: string
+			usuariobd: string
+			senhabd: string
+		}
+		PCCONTRO: {
+			codusuario: number
+			codrotina: number
+			acesso: string
+		}
+		TABFABRICA: {
+			CODFABRICA: number
+			NOME: string
+			ICMS: number
+			ST: number
+			MARGEMF6: number
+			MARGEMF2A: number
+			MARGEMF2V: number
+			ATIVO: string
+		}
+		TABCALCULOFABRICA: {
+			ID: number
+			PRODUTO: string
+			FABRICA: string
+			STFABRICA: number
+			ICMSFABRICA: number
+			MARGEMF6: number
+			MARGEMF2VRJ: number
+			MARGEMF2ATC: number
+			PBASEF6: number
+			PVENDAF6: number
+			PVENDAF2ATC: number
+			PVENDAF2VRJ: number
+			DTINCLUSAO: Date
+			CODFUNC
+		}
+		TABCRACHA: {
+			CRACHA: string
+			MATRICULA: number
+			LOCALSEPARACAO: string
 		}
 	}
 }

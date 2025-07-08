@@ -14,7 +14,10 @@ export async function getOmByNumber(
 
 	const getOmByNumber = makeGetOrderManagementUseCase()
 
-	const { om } = await getOmByNumber.execute({ omNumber: id })
+	const { om } = await getOmByNumber.execute({
+		omNumber: id,
+		userKaizenId: request.user.kaizenId
+	})
 
 	return reply.status(200).send({ omItems: om })
 }

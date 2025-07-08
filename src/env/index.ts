@@ -3,11 +3,18 @@ import { z } from 'zod'
 
 const envSchema = z.object({
 	PORT: z.coerce.number().default(3333),
+	NODE_ENV: z.enum(['dev', 'test', 'prod']).default('prod'),
 	PG_HOST: z.string(),
 	PG_PORT: z.coerce.number(),
 	PG_USER: z.string(),
 	PG_NAME: z.string(),
-	PG_PASS: z.string()
+	PG_PASS: z.string(),
+	ORACLE_HOST: z.string(),
+	ORACLE_PORT: z.coerce.number(),
+	ORACLE_USER: z.string(),
+	ORACLE_NAME: z.string(),
+	ORACLE_PASS: z.string(),
+	JWT_SECRET: z.string()
 })
 
 const _env = envSchema.safeParse(process.env)

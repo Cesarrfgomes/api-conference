@@ -1,13 +1,15 @@
-export type UserType = {
-	id: number
-	ativo: string
-	chapaerp: number
-	login: string
-	nome: string
-	senha?: string
+export type UserKaizenType = {
+	kaizenUserId: number
+	isActive: string
+	winthorUserId: number
+	kaizenUsername: string
+	name: string
+	password?: string
 }
 
-export type UserDepositsType = {
-	deposito: number
-	usuario_id: number
+export type UserWinthorType = {
+	winthorUserId: number
+	name: string
+	winthorUsername: string
+	password: string
 }

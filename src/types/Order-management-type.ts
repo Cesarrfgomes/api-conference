@@ -1,6 +1,7 @@
 export type OrderManagementType = {
 	codprod: string
 	qt: number
-	qtseparada: number
-	qtconferida: number
+	separateQt: number
+	checkedQt: number
+	addressId: number
 }

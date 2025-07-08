@@ -1,6 +1,5 @@
-import { createHash } from 'node:crypto'
 import { UserRepository } from '../../repositories/user-repository'
-import { UserType } from '../../types/User-type'
+import { UserKaizenType, UserWinthorType } from '../../types/User-type'
 import { InvalidCredentialsError } from '../errors/invalid-credentials-error'
 
 interface AuthenticateUseCaseRequest {
@@ -9,7 +8,8 @@ interface AuthenticateUseCaseRequest {
 }
 
 interface AuthenticateUseCaseResponse {
-	user: UserType
+	winthorUser: UserWinthorType
+	kaizenUser: UserKaizenType | null
 }
 export class AuthenticateUseCase {
 	constructor(private usersRepository: UserRepository) {}
@@ -18,24 +18,28 @@ export class AuthenticateUseCase {
 		username,
 		password
 	}: AuthenticateUseCaseRequest): Promise<AuthenticateUseCaseResponse> {
-		const user = await this.usersRepository.findUserByUsername(username)
+		const winthorUser =
+			await this.usersRepository.findWinthorUserByUsername(username)
 
-		if (!user) {
+		const decryptPassword =
+			await this.usersRepository.getWinthorUserPasswordByUsername(
+				username
+			)
+
+		if (!winthorUser) {
 			throw new InvalidCredentialsError()
 		}
 
-		const password_hash = createHash('md5').update(password).digest('hex')
-
-		const doesPasswordMatches = password_hash === user.senha
+		const doesPasswordMatches = decryptPassword === password.toUpperCase()
 
 		if (!doesPasswordMatches) {
 			throw new InvalidCredentialsError()
 		}
 
-		const { senha: _, ...userWithOutPassword } = user
+		const kaizenUser = await this.usersRepository.findKaizenUserByErpCode(
+			winthorUser.winthorUserId
+		)
 
-		return {
-			user: userWithOutPassword
-		}
+		return { winthorUser, kaizenUser }
 	}
 }

@@ -1,0 +1,23 @@
+# APP
+
+Papa Materiais app.
+
+## RFs (Requisitos funcionais)
+
+-   [x] Deve ser possível se autenticar;
+-   [x] Deve ser possível inserir e excluir o cálculo de preço do produto com base em sua fábrica;
+-   [] Deve ser possível iniciar uma separação;
+-   [] Deve ser possível finalizar uma separação;
+-   [] Deve ser possível cadastrar, atualizar e excluir uma fábrica;
+
+## Rns (Regras de negócio)
+
+-   [] O usuário não pode iniciar uma separação com outra em andamento;
+-   [] A separação pode ter no máximo 2 separadores;
+-   [x] O usuário só pode acessar a rotina se tiver permissão de acesso;
+
+## RNFs (Requisitos não-funcionais)
+
+-   [x] Os dados da aplicação precisam ser estar persistidos em bancos de PostgreSQL e Oracle;
+-   [x] O usuário deve ser identificado por um JWT (JSON Web Token);
+-   [ ] Todas as listas de dados precisam estar páginadas com 20 itens por páginas;
