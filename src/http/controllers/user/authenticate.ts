@@ -32,7 +32,7 @@ export async function authenticate(
 		return reply.status(200).send({ winthorUser, kaizenUser, token })
 	} catch (err) {
 		if (err instanceof InvalidCredentialsError) {
-			return reply.status(400).send({ message: err.message })
+			return reply.status(403).send({ message: err.message })
 		}
 
 		throw err

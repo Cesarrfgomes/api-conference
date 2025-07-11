@@ -1,7 +1,12 @@
 import { UserKaizenType, UserWinthorType } from '../types/User-type'
 
 export interface UserRepository {
-	findUserByNameTag(nameTags: string): Promise<UserKaizenType[]>
+	findUserByNameTag(nameTags: string): Promise<
+		{
+			kaizenId: number
+			winthorId: number
+		}[]
+	>
 	findWinthorUserById(userId: number): Promise<UserWinthorType | null>
 	findKaizenUserByErpCode(
 		winthorUserId: number

@@ -1,0 +1,28 @@
+import { FastifyReply, FastifyRequest } from 'fastify'
+import { z } from 'zod'
+import { makeGetFactoryUseCase } from '../../../use-cases/factories/make-get-factory-use-case'
+
+export async function getFactoryByName(
+	request: FastifyRequest,
+	reply: FastifyReply
+) {
+	const getFactoryParamsSchema = z.object({
+		name: z.string()
+	})
+
+	const { name } = getFactoryParamsSchema.parse(request.params)
+
+	try {
+		const getFactoryUseCase = makeGetFactoryUseCase()
+		const { factory } = await getFactoryUseCase.execute({ name })
+
+		if (!factory) {
+			return reply.status(404).send({ message: 'Factory not found' })
+		}
+
+		return reply.status(200).send({ factory })
+	} catch (err) {
+		console.error(err)
+		return reply.status(500).send({ message: 'Internal server error' })
+	}
+}
