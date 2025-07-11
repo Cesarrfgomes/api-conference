@@ -39,7 +39,8 @@ export async function calcProductPriceRoutes(app: FastifyInstance) {
 						},
 						initialPrice: {
 							type: 'number',
-							description: 'Preço inicial do produto'
+							description:
+								'Preço inicial do produto passado pela fábrica'
 						},
 						percIpi: {
 							type: 'number',
@@ -61,15 +62,15 @@ export async function calcProductPriceRoutes(app: FastifyInstance) {
 						properties: {
 							filial2A: {
 								type: 'object',
-								description: 'Cálculo para filial 2A'
+								description: 'Cálculo para filial 2A (Atacado)'
 							},
 							filial2V: {
 								type: 'object',
-								description: 'Cálculo para filial 2V'
+								description: 'Cálculo para filial 2V (Varejo)'
 							},
 							filial6: {
 								type: 'object',
-								description: 'Cálculo para filial 6'
+								description: 'Cálculo para filial 6 (Atacado)'
 							},
 							message: {
 								type: 'string',
@@ -142,7 +143,8 @@ export async function calcProductPriceRoutes(app: FastifyInstance) {
 			schema: {
 				tags: ['Calculations'],
 				summary: 'Buscar cálculo por ID',
-				description: 'Busca um cálculo específico pelo ID',
+				description:
+					'Busca um cálculo específico pelo ID, retornando os dados do cálculo',
 				security: [{ Bearer: [] }],
 				params: {
 					type: 'object',

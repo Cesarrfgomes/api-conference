@@ -16,11 +16,11 @@ export async function authenticateRoutes(app: FastifyInstance) {
 					properties: {
 						username: {
 							type: 'string',
-							description: 'Nome de usuário do sistema'
+							description: 'Nome de usuário do winthor'
 						},
 						password: {
 							type: 'string',
-							description: 'Senha do usuário'
+							description: 'Senha do usuário do winthor'
 						}
 					}
 				},
@@ -55,7 +55,7 @@ export async function authenticateRoutes(app: FastifyInstance) {
 						properties: {
 							message: {
 								type: 'string',
-								example: 'As credenciais nao coincidem.'
+								example: 'As credenciais não coincidem.'
 							}
 						}
 					}

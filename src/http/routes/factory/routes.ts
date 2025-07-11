@@ -6,10 +6,12 @@ import { verifyJWT } from '../../middlewares/verify-jwt'
 import { getFactoryByName } from '../../controllers/factory/get'
 
 export async function factoriesRoutes(app: FastifyInstance) {
+	app.addHook('onRequest', verifyJWT)
+
 	app.post(
 		'/factories',
 		{
-			onRequest: [verifyJWT, verifyUserRoutineAccess(9816)],
+			onRequest: [verifyUserRoutineAccess(9816)],
 			schema: {
 				tags: ['Factories'],
 				summary: 'Criar nova fábrica',
@@ -41,11 +43,11 @@ export async function factoriesRoutes(app: FastifyInstance) {
 						},
 						marginF2V: {
 							type: 'number',
-							description: 'Margem para filial 2V'
+							description: 'Margem para filial 2 Varejo'
 						},
 						marginF2A: {
 							type: 'number',
-							description: 'Margem para filial 2A'
+							description: 'Margem para filial 2 Atacado'
 						},
 						marginF6: {
 							type: 'number',
@@ -114,7 +116,7 @@ export async function factoriesRoutes(app: FastifyInstance) {
 	app.get(
 		'/factories/:name',
 		{
-			onRequest: [verifyJWT, verifyUserRoutineAccess(9816)],
+			onRequest: [verifyUserRoutineAccess(9816)],
 			schema: {
 				tags: ['Factories'],
 				summary: 'Buscar fábrica por nome',

@@ -1,13 +1,17 @@
 import { FastifyInstance } from 'fastify'
 import { getOmByNumber } from '../../controllers/order-management/om'
+import { finalizeSeparation } from '../../controllers/order-management/finalize-separation'
+import { initSeparation } from '../../controllers/order-management/init-separation'
 import { verifyJWT } from '../../middlewares/verify-jwt'
 import { verifyUserDepositAccess } from '../../middlewares/verify-user-deposit'
 
 export async function orderManagementRoutes(app: FastifyInstance) {
+	app.addHook('onRequest', verifyJWT)
+
 	app.get(
 		'/om/:id',
 		{
-			onRequest: [verifyJWT, verifyUserDepositAccess],
+			onRequest: [verifyUserDepositAccess],
 			schema: {
 				tags: ['Order Management'],
 				summary: 'Buscar ordem de movimentação por número',
@@ -77,5 +81,150 @@ export async function orderManagementRoutes(app: FastifyInstance) {
 			}
 		},
 		getOmByNumber
+	)
+
+	app.post(
+		'/om/:id/iniciar',
+		{
+			onRequest: [verifyUserDepositAccess],
+			schema: {
+				tags: ['Order Management'],
+				summary: 'Iniciar separação da OM',
+				description:
+					'Inicia a separação de uma OM, definindo data_inicio_separacao com timestamp atual',
+				security: [{ Bearer: [] }],
+				params: {
+					type: 'object',
+					required: ['id'],
+					properties: {
+						id: {
+							type: 'number',
+							description: 'Número da ordem de movimentação'
+						}
+					}
+				},
+				querystring: {
+					type: 'object',
+					required: ['kaizenIds'],
+					properties: {
+						kaizenIds: {
+							type: 'string',
+							description:
+								'IDs dos usuários Kaizen separados por vírgula (ex: 1,2,3)'
+						}
+					}
+				},
+				response: {
+					200: {
+						type: 'object',
+						properties: {
+							message: {
+								type: 'string',
+								example: 'Separação iniciada com sucesso!'
+							}
+						}
+					},
+					404: {
+						type: 'object',
+						properties: {
+							message: {
+								type: 'string',
+								example: 'Om não encontrada.'
+							}
+						}
+					},
+					403: {
+						type: 'object',
+						properties: {
+							message: {
+								type: 'string',
+								example:
+									'Usuário não tem permissão de acesso à esse depósito.'
+							}
+						}
+					}
+				}
+			}
+		},
+		initSeparation
+	)
+
+	app.post(
+		'/om/:id/finalizar',
+		{
+			onRequest: [verifyUserDepositAccess],
+			schema: {
+				tags: ['Order Management'],
+				summary: 'Finalizar separação da OM',
+				description:
+					'Finaliza a separação de uma OM, definindo separatedQt igual a qt para todos os produtos',
+				security: [{ Bearer: [] }],
+				params: {
+					type: 'object',
+					required: ['id'],
+					properties: {
+						id: {
+							type: 'number',
+							description: 'Número da ordem de movimentação'
+						}
+					}
+				},
+				querystring: {
+					type: 'object',
+					required: ['kaizenIds'],
+					properties: {
+						kaizenIds: {
+							type: 'string',
+							description:
+								'IDs dos usuários Kaizen separados por vírgula (ex: 1,2,3)'
+						}
+					}
+				},
+				response: {
+					200: {
+						type: 'object',
+						properties: {
+							message: {
+								type: 'string',
+								example: 'Separação finalizada com sucesso!'
+							},
+							omItems: {
+								type: 'array',
+								items: {
+									type: 'object',
+									properties: {
+										codprod: { type: 'string' },
+										qt: { type: 'number' },
+										separateQt: { type: 'number' },
+										checkedQt: { type: 'number' },
+										addressId: { type: 'number' }
+									}
+								}
+							}
+						}
+					},
+					404: {
+						type: 'object',
+						properties: {
+							message: {
+								type: 'string',
+								example: 'Om não encontrada.'
+							}
+						}
+					},
+					403: {
+						type: 'object',
+						properties: {
+							message: {
+								type: 'string',
+								example:
+									'Usuário não tem permissão de acesso à esse depósito.'
+							}
+						}
+					}
+				}
+			}
+		},
+		finalizeSeparation
 	)
 }

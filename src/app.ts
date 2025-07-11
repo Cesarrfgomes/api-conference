@@ -32,7 +32,6 @@ app.register(fastifyJwt, {
 	}
 })
 
-// Swagger configuration
 app.register(fastifySwagger, {
 	swagger: {
 		info: {
@@ -61,17 +60,23 @@ app.register(fastifySwagger, {
 		tags: [
 			{
 				name: 'Authentication',
-				description: 'Endpoints de autenticação'
+				description: 'Endpoint de autenticação'
 			},
-			{ name: 'Users', description: 'Endpoints de usuários' },
-			{ name: 'Factories', description: 'Endpoints de fábricas' },
+			{
+				name: 'Users',
+				description: 'Endpoints de usuários'
+			},
+			{
+				name: 'Factories',
+				description: 'Endpoints de fábricas para cálculo de preço'
+			},
 			{
 				name: 'Calculations',
-				description: 'Endpoints de cálculos de preços'
+				description: 'Endpoints de cálculo de preços'
 			},
 			{
 				name: 'Order Management',
-				description: 'Endpoints de gerenciamento de ordens'
+				description: 'Endpoints de gerenciamento de OMs'
 			}
 		]
 	}

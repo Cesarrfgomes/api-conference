@@ -10,7 +10,7 @@ export async function userRoutes(app: FastifyInstance) {
 		{
 			schema: {
 				tags: ['Users'],
-				summary: 'Buscar usuários por name tags',
+				summary: 'Buscar usuários por seus crachás',
 				description:
 					'Busca usuários no sistema usando name tags separados por vírgula',
 				security: [{ Bearer: [] }],
@@ -21,7 +21,7 @@ export async function userRoutes(app: FastifyInstance) {
 						nameTags: {
 							type: 'string',
 							description:
-								'Name tags dos usuários separados por vírgula (ex: tag1,tag2,tag3)'
+								'Name tags dos usuários separados por vírgula (ex: tag1,tag2)'
 						}
 					}
 				},

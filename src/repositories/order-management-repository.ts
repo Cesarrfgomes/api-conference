@@ -5,4 +5,12 @@ export interface OrderManagementRepository {
 	findOmDepositsByAddressId(
 		addressId: number[]
 	): Promise<Pick<{ deposit: number }, 'deposit'> | undefined>
+	updateOmSeparation(
+		omNumber: number,
+		omData: OrderManagementType[]
+	): Promise<void>
+	updateOmInitSeparation(
+		omNumber: number,
+		omData: OrderManagementType[]
+	): Promise<void>
 }
