@@ -9,14 +9,18 @@ export async function getOmByNumber(
 	const getOmsParamsSchema = z.object({
 		id: z.coerce.number()
 	})
+	const getOmsQuerySchema = z.object({
+		kaizenIds: z.string().transform(val => val.split(',').map(Number))
+	})
 
 	const { id } = getOmsParamsSchema.parse(request.params)
+	const { kaizenIds } = getOmsQuerySchema.parse(request.query)
 
 	const getOmByNumber = makeGetOrderManagementUseCase()
 
 	const { om } = await getOmByNumber.execute({
 		omNumber: id,
-		userKaizenId: request.user.kaizenId
+		userKaizenIds: kaizenIds
 	})
 
 	return reply.status(200).send({ omItems: om })

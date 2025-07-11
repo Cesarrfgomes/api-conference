@@ -6,7 +6,7 @@ import { UserUnauthorizedDepositAccessError } from '../errors/user-unauthorized-
 
 interface GetOmUseCaseRequest {
 	omNumber: number
-	userKaizenId: number
+	userKaizenIds: number[]
 }
 
 interface GetOmUseCaseResponse {
@@ -21,7 +21,7 @@ export class GetOmUseCase {
 
 	async execute({
 		omNumber,
-		userKaizenId
+		userKaizenIds
 	}: GetOmUseCaseRequest): Promise<GetOmUseCaseResponse> {
 		const om = await this.orderManagementRepository.findOmByNumber(omNumber)
 
@@ -34,15 +34,18 @@ export class GetOmUseCase {
 				om.map(item => item.addressId)
 			)
 
-		const usersDeposits =
-			await this.usersRepository.findUserDepositsByKaizenId(userKaizenId)
-
-		const doesUserHaveOmDeposit = usersDeposits.find(
-			item => item.deposit === omDeposits?.deposit
-		)
-
-		if (!doesUserHaveOmDeposit) {
-			throw new UserUnauthorizedDepositAccessError()
+		// For each user, check if they have access to the OM deposit(s)
+		for (const userKaizenId of userKaizenIds) {
+			const usersDeposits =
+				await this.usersRepository.findUserDepositsByKaizenId(
+					userKaizenId
+				)
+			const doesUserHaveOmDeposit = usersDeposits.find(
+				item => item.deposit === omDeposits?.deposit
+			)
+			if (!doesUserHaveOmDeposit) {
+				throw new UserUnauthorizedDepositAccessError()
+			}
 		}
 
 		return {
