@@ -9,14 +9,19 @@
 			"ESNext.Collection",
 			"ESNext.Iterator"
 		],
-		"module": "nodenext",
+		"module": "commonjs",
 		"target": "es2022",
-		// "rootDir": "./dist",
-		// "out": "./build",
+		"outDir": "./dist",
+		"rootDir": "./src",
 
 		"strict": true,
 		"esModuleInterop": true,
 		"skipLibCheck": true,
-		"moduleResolution": "node16"
-	}
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"allowSyntheticDefaultImports": true,
+		"forceConsistentCasingInFileNames": true
+	},
+	"include": ["src/**/*"],
+	"exclude": ["node_modules", "dist"]
 }

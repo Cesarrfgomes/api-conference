@@ -2,9 +2,28 @@
 	"name": "api-conference",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
+	"main": "dist/app.js",
 	"scripts": {
-		"dev": "tsx --watch src/app.ts"
+		"dev": "tsx --watch src/app.ts",
+		"build": "tsc",
+		"build:exe": "npm run build && pkg dist/app.js --targets node18-win-x64 --output api-conference.exe",
+		"build:exe:all": "npm run build && pkg dist/app.js --targets node18-win-x64,node18-linux-x64,node18-macos-x64 --output api-conference",
+		"install-service": "npm run build && node scripts/install-service.js",
+		"uninstall-service": "node scripts/uninstall-service.js",
+		"start-service": "net start \"API Conference\"",
+		"stop-service": "net stop \"API Conference\"",
+		"test-build": "npm run build && node dist/app.js"
+	},
+	"pkg": {
+		"assets": [
+			"node_modules/**/*"
+		],
+		"targets": [
+			"node18-win-x64",
+			"node18-linux-x64",
+			"node18-macos-x64"
+		],
+		"outputPath": "executables"
 	},
 	"keywords": [],
 	"author": "",
@@ -30,6 +49,8 @@
 		"zod": "^3.25.67"
 	},
 	"devDependencies": {
-		"@types/lodash": "^4.17.20"
+		"@types/lodash": "^4.17.20",
+		"pkg": "^5.8.1",
+		"node-windows": "^1.0.0-beta.8"
 	}
 }
