@@ -142,7 +142,3 @@ scripts/
 1. Verify PostgreSQL and Oracle are running
 2. Check connection strings in environment variables
 3. Ensure network connectivity to database servers
-
-## 📞 Support
-
-For issues or questions, check the logs in Windows Event Viewer or contact the development team.
