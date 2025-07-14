@@ -177,5 +177,21 @@ declare module 'knex/types/tables' {
 			MATRICULA: number
 			LOCALSEPARACAO: string
 		}
+		TABMOVIMENTACAO: {
+			ID: number
+			NUMEROOM: number
+			CODFUNCSEP: number
+			CODFUNCSEP2: number
+			CODFUNCCONF: number
+			CODPROD: number
+			QT: number
+			QTSEPARADA: number
+			QTCONFERIDA: number
+			DTINICIOSEPARACAO: Date
+			DTINICIOCONFERENCIA: Date
+			DTFIMSEPARACAO: Date
+			DTFIMCONFERENCIA: Date
+			SEPARADO: string
+		}
 	}
 }

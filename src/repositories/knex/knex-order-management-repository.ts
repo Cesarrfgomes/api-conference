@@ -1,6 +1,8 @@
 import { knexPg } from '../../config/databases/postgres'
 import { OrderManagementRepository } from '../order-management-repository'
 import { OrderManagementType } from '../../types/Order-management-type'
+import _ from 'lodash'
+import { knexOracle } from '../../config/databases/oracle'
 
 export class KnexOrderManagementRepository
 	implements OrderManagementRepository
@@ -58,5 +60,38 @@ export class KnexOrderManagementRepository
 				})
 				.where({ produto_id: product.produtoId, numeroom: omNumber })
 		}
+	}
+
+	async createOmOnWinthor(omData: OrderManagementType[]): Promise<void> {
+		const fieldMapping: any = {
+			numeroom: 'NUMEROOM',
+			codfuncsep: 'CODFUNCSEP',
+			codprod: 'CODPROD',
+			qt: 'QT',
+			qtseparada: 'QTSEPARADA',
+			qtconferida: 'QTCONFERIDA',
+			separado: 'SEPARADO'
+		}
+
+		function mapFieldsToOracle(data: any) {
+			return _.mapKeys(
+				data,
+				(value, key) => fieldMapping[key.toLowerCase()] || key
+			)
+		}
+
+		const records = omData.map(item => {
+			return mapFieldsToOracle({
+				numeroom: item.numeroom,
+				codfuncsep: item.codfuncsep,
+				codprod: item.codprod,
+				qt: item.qt,
+				qtseparada: item.separateQt,
+				qtconferida: item.checkedQt,
+				separado: item.separated
+			})
+		})
+
+		await knexOracle('TABMOVIMENTACAO').insert(records)
 	}
 }

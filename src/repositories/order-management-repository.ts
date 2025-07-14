@@ -13,4 +13,5 @@ export interface OrderManagementRepository {
 		omNumber: number,
 		omData: OrderManagementType[]
 	): Promise<void>
+	createOmOnWinthor(omData: OrderManagementType[]): Promise<void>
 }
