@@ -2,7 +2,7 @@ import { FactoriesRepository } from '../../repositories/factories-repository'
 import { Factory } from '../../types/Factory-type'
 
 interface GetFactoryUseCaseRequest {
-	name: string
+	id: number
 }
 
 interface GetFactoryUseCaseResponse {
@@ -13,9 +13,9 @@ export class GetFactoryUseCase {
 	constructor(private factoriesRepository: FactoriesRepository) {}
 
 	async execute({
-		name
+		id
 	}: GetFactoryUseCaseRequest): Promise<GetFactoryUseCaseResponse> {
-		const factory = await this.factoriesRepository.getFactoryByName(name)
+		const factory = await this.factoriesRepository.getFactoryById(id)
 		return {
 			factory
 		}

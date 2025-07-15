@@ -7,7 +7,18 @@ export async function findFactories(
 ) {
 	const findFactories = makeFindFactoriesUseCase()
 
-	const factories = await findFactories.execute()
+	const result = await findFactories.execute()
 
-	return reply.status(200).send(factories)
+	const factories = result.factories.map(f => ({
+		factoryCode: f.factoryCode,
+		name: f.name,
+		icms: f.icms,
+		st: f.st,
+		marginf2a: f.marginf2a,
+		marginf2v: f.marginf2v,
+		marginf6: f.marginf6,
+		isActive: f.isActive
+	}))
+
+	return reply.status(200).send({ factories })
 }

@@ -25,8 +25,41 @@ export class KnexFactoriesRepository implements FactoriesRepository {
 		return factory
 	}
 
+	async getFactoryById(id: number): Promise<Factory | null> {
+		const factory = await knexOracle('TABFABRICA')
+			.select(
+				'CODFABRICA as factoryCode',
+				'NOME as name',
+				'ICMS as icms',
+				'ST as st',
+				'MARGEMF6 as marginf6',
+				'MARGEMF2A as marginf2a',
+				'MARGEMF2V as marginf2v',
+				'ATIVO as isActive'
+			)
+			.where('CODFABRICA', id)
+			.first()
+
+		if (!factory) {
+			return null
+		}
+
+		return factory
+	}
+
 	async findFactories() {
-		const factories = await knexOracle('TABFABRICA').select('NOME as name')
+		const factories = await knexOracle('TABFABRICA')
+			.select(
+				'CODFABRICA as factoryCode',
+				'NOME as name',
+				'ICMS as icms',
+				'ST as st',
+				'MARGEMF6 as marginf6',
+				'MARGEMF2A as marginf2a',
+				'MARGEMF2V as marginf2v',
+				'ATIVO as isActive'
+			)
+			.orderBy('factoryCode', 'asc')
 
 		return factories
 	}
@@ -66,5 +99,44 @@ export class KnexFactoriesRepository implements FactoriesRepository {
 		await knexOracle('TABFABRICA').insert(mapFieldsToOracle(dataLowerCase))
 
 		return data
+	}
+
+	async delete(id: number) {
+		await knexOracle('TABFABRICA').delete().where('CODFABRICA', id)
+	}
+
+	async update(id: number, data: Factory) {
+		const fieldMapping: any = {
+			factorycode: 'CODFABRICA',
+			name: 'NOME',
+			icms: 'ICMS',
+			st: 'ST',
+			marginf2a: 'MARGEMF2A',
+			marginf2v: 'MARGEMF2V',
+			marginf6: 'MARGEMF6',
+			active: 'ATIVO'
+		}
+
+		function mapFieldsToOracle(data: any) {
+			return _.mapKeys(
+				data,
+				(value, key) => fieldMapping[key.toLowerCase()] || key
+			)
+		}
+
+		const dataLowerCase = {
+			factorycode: data.factoryCode,
+			name: data.name,
+			icms: data.icms,
+			st: data.st,
+			marginf2a: data.marginf2a,
+			marginf2v: data.marginf2v,
+			marginf6: data.marginf6,
+			active: data.active
+		}
+
+		await knexOracle('TABFABRICA')
+			.update(mapFieldsToOracle(dataLowerCase))
+			.where('CODFABRICA', id)
 	}
 }

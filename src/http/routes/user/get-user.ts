@@ -6,10 +6,10 @@ export async function userRoutes(app: FastifyInstance) {
 	app.addHook('onRequest', verifyJWT)
 
 	app.get(
-		'/usuarios',
+		'/usuarios/cracha',
 		{
 			schema: {
-				tags: ['Users'],
+				tags: ['Usuários'],
 				summary: 'Buscar usuários por seus crachás',
 				description:
 					'Busca usuários no sistema usando name tags separados por vírgula',

@@ -3,17 +3,18 @@ import { createFactory } from '../../controllers/factory/create'
 import { findFactories } from '../../controllers/factory/find'
 import { verifyUserRoutineAccess } from '../../middlewares/verify-user-routine-access'
 import { verifyJWT } from '../../middlewares/verify-jwt'
-import { getFactoryByName } from '../../controllers/factory/get'
+import { getFactoryById } from '../../controllers/factory/get'
+import { updateFactory } from '../../controllers/factory/update'
 
 export async function factoriesRoutes(app: FastifyInstance) {
 	app.addHook('onRequest', verifyJWT)
 
 	app.post(
-		'/fabricas',
+		'/factories',
 		{
 			onRequest: [verifyUserRoutineAccess(9816)],
 			schema: {
-				tags: ['Factories'],
+				tags: ['Fábricas'],
 				summary: 'Criar nova fábrica',
 				description:
 					'Cria uma nova fábrica no sistema com os dados fornecidos',
@@ -88,7 +89,7 @@ export async function factoriesRoutes(app: FastifyInstance) {
 		'/fabricas',
 		{
 			schema: {
-				tags: ['Factories'],
+				tags: ['Fábricas'],
 				summary: 'Listar todas as fábricas',
 				description:
 					'Retorna uma lista de todas as fábricas cadastradas no sistema',
@@ -101,7 +102,14 @@ export async function factoriesRoutes(app: FastifyInstance) {
 								items: {
 									type: 'object',
 									properties: {
-										name: { type: 'string' }
+										factoryCode: { type: 'number' },
+										name: { type: 'string' },
+										icms: { type: 'number' },
+										st: { type: 'number' },
+										marginf6: { type: 'number' },
+										marginf2a: { type: 'number' },
+										marginf2v: { type: 'number' },
+										isActive: { type: 'string' }
 									}
 								}
 							}
@@ -114,21 +122,21 @@ export async function factoriesRoutes(app: FastifyInstance) {
 	)
 
 	app.get(
-		'/fabricas/:name',
+		'/fabricas/:id',
 		{
 			onRequest: [verifyUserRoutineAccess(9816)],
 			schema: {
-				tags: ['Factories'],
-				summary: 'Buscar fábrica por nome',
-				description: 'Busca uma fábrica específica pelo nome',
+				tags: ['Fábricas'],
+				summary: 'Buscar fábrica por ID',
+				description: 'Busca uma fábrica específica pelo ID',
 				security: [{ Bearer: [] }],
 				params: {
 					type: 'object',
-					required: ['name'],
+					required: ['id'],
 					properties: {
-						name: {
-							type: 'string',
-							description: 'Nome da fábrica'
+						id: {
+							type: 'number',
+							description: 'ID da fábrica'
 						}
 					}
 				},
@@ -163,6 +171,81 @@ export async function factoriesRoutes(app: FastifyInstance) {
 				}
 			}
 		},
-		getFactoryByName
+		getFactoryById
+	)
+
+	app.put(
+		'/fabricas/:id',
+		{
+			schema: {
+				tags: ['Fábricas'],
+				summary: 'Atualizar uma fábrica',
+				description:
+					'Atualiza os dados de uma fábrica existente pelo ID',
+				security: [{ Bearer: [] }],
+				params: {
+					type: 'object',
+					required: ['id'],
+					properties: {
+						id: { type: 'number', description: 'ID da fábrica' }
+					}
+				},
+				body: {
+					type: 'object',
+					required: [
+						'name',
+						'icms',
+						'st',
+						'marginF2V',
+						'marginF2A',
+						'marginF6'
+					],
+					properties: {
+						name: {
+							type: 'string',
+							description: 'Nome da fábrica'
+						},
+						icms: {
+							type: 'number',
+							description: 'Percentual de ICMS'
+						},
+						st: { type: 'number', description: 'Percentual de ST' },
+						marginF2V: {
+							type: 'number',
+							description: 'Margem para filial 2 Varejo'
+						},
+						marginF2A: {
+							type: 'number',
+							description: 'Margem para filial 2 Atacado'
+						},
+						marginF6: {
+							type: 'number',
+							description: 'Margem para filial 6'
+						}
+					}
+				},
+				response: {
+					200: {
+						type: 'object',
+						properties: {
+							message: {
+								type: 'string',
+								example: 'Fábrica atualizada com sucesso!'
+							}
+						}
+					},
+					400: {
+						type: 'object',
+						properties: {
+							message: {
+								type: 'string',
+								example: 'Fábrica com esse nome já cadastrada.'
+							}
+						}
+					}
+				}
+			}
+		},
+		updateFactory
 	)
 }

@@ -14,7 +14,7 @@ export async function orderManagementRoutes(app: FastifyInstance) {
 		{
 			onRequest: [verifyUserDepositAccess],
 			schema: {
-				tags: ['Order Management'],
+				tags: ['Gerenciamento de OMs'],
 				summary: 'Buscar ordem de movimentação por número',
 				description:
 					'Busca uma ordem de movimentação específica e verifica se os usuários têm acesso ao depósito',
@@ -89,7 +89,7 @@ export async function orderManagementRoutes(app: FastifyInstance) {
 		{
 			onRequest: [verifyUserDepositAccess],
 			schema: {
-				tags: ['Order Management'],
+				tags: ['Gerenciamento de OMs'],
 				summary: 'Iniciar separação da OM',
 				description:
 					'Inicia a separação de uma OM, definindo data_inicio_separacao com timestamp atual',
@@ -155,7 +155,7 @@ export async function orderManagementRoutes(app: FastifyInstance) {
 		{
 			onRequest: [verifyUserDepositAccess],
 			schema: {
-				tags: ['Order Management'],
+				tags: ['Gerenciamento de OMs'],
 				summary: 'Finalizar separação da OM',
 				description:
 					'Finaliza a separação de uma OM, definindo separatedQt igual a qt para todos os produtos',
@@ -234,7 +234,7 @@ export async function orderManagementRoutes(app: FastifyInstance) {
 		{
 			onRequest: [verifyUserDepositAccess],
 			schema: {
-				tags: ['Order Management'],
+				tags: ['Gerenciamento de OMs'],
 				summary: 'Cancelar separação da OM',
 				description:
 					'Cancelar a separação de uma OM, definindo data_inicio_separacao como null',

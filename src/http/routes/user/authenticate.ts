@@ -6,7 +6,7 @@ export async function authenticateRoutes(app: FastifyInstance) {
 		'/login',
 		{
 			schema: {
-				tags: ['Authentication'],
+				tags: ['Autenticação'],
 				summary: 'Autenticar usuário',
 				description:
 					'Autentica um usuário com username e password, retornando um JWT token',

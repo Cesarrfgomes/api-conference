@@ -13,7 +13,7 @@ export async function calcProductPriceRoutes(app: FastifyInstance) {
 		'/calculos',
 		{
 			schema: {
-				tags: ['Calculations'],
+				tags: ['Cálculos'],
 				summary: 'Criar cálculo de preço de produto',
 				description:
 					'Cria um novo cálculo de preço de produto baseado na fábrica e parâmetros fornecidos',
@@ -88,7 +88,7 @@ export async function calcProductPriceRoutes(app: FastifyInstance) {
 		'/calculos',
 		{
 			schema: {
-				tags: ['Calculations'],
+				tags: ['Cálculos'],
 				summary: 'Listar cálculos do usuário',
 				description:
 					'Retorna uma lista paginada dos cálculos realizados pelo usuário autenticado',
@@ -141,7 +141,7 @@ export async function calcProductPriceRoutes(app: FastifyInstance) {
 		'/calculos/:id',
 		{
 			schema: {
-				tags: ['Calculations'],
+				tags: ['Cálculos'],
 				summary: 'Buscar cálculo por ID',
 				description:
 					'Busca um cálculo específico pelo ID, retornando os dados do cálculo',
