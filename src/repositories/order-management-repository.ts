@@ -14,6 +14,7 @@ export interface OrderManagementRepository {
 		date: string,
 		omData: OrderManagementType[]
 	): Promise<void>
+	cancelOmSeparation(omNumber: number): Promise<void>
 	createOmOnWinthor(
 		omData: OrderManagementType[],
 		user1: number,

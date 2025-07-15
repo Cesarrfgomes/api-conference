@@ -40,15 +40,15 @@ export class KnexOrderManagementRepository
 		omNumber: number,
 		omData: OrderManagementType[]
 	): Promise<void> {
-		// for (const product of omData) {
-		// 	await knexPg('movimentacao')
-		// 		.update({
-		// 			qtseparada: product.qt,
-		// 			data_fim_separacao: knexPg.raw('NOW()'),
-		// 			separado: 'S'
-		// 		})
-		// 		.where({ produto_id: product.produtoId, numeroom: omNumber })
-		// }
+		for (const product of omData) {
+			await knexPg('movimentacao')
+				.update({
+					qtseparada: product.qt,
+					data_fim_separacao: knexPg.raw('NOW()'),
+					separado: 'S'
+				})
+				.where({ produto_id: product.produtoId, numeroom: omNumber })
+		}
 	}
 
 	async updateOmInitSeparation(
@@ -63,6 +63,14 @@ export class KnexOrderManagementRepository
 				})
 				.where({ produto_id: product.produtoId, numeroom: omNumber })
 		}
+	}
+
+	async cancelOmSeparation(omNumber: number): Promise<void> {
+		await knexPg('movimentacao')
+			.update({
+				data_inicio_separacao: null
+			})
+			.where('numeroom', omNumber)
 	}
 
 	async createOmOnWinthor(

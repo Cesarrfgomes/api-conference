@@ -4,6 +4,7 @@ import { finalizeSeparation } from '../../controllers/order-management/finalize-
 import { initSeparation } from '../../controllers/order-management/init-separation'
 import { verifyJWT } from '../../middlewares/verify-jwt'
 import { verifyUserDepositAccess } from '../../middlewares/verify-user-deposit'
+import { cancelSeparation } from '../../controllers/order-management/cancel-separation'
 
 export async function orderManagementRoutes(app: FastifyInstance) {
 	app.addHook('onRequest', verifyJWT)
@@ -84,7 +85,7 @@ export async function orderManagementRoutes(app: FastifyInstance) {
 	)
 
 	app.post(
-		'/om/:id/iniciar',
+		'/om/:id/separacao/iniciar',
 		{
 			onRequest: [verifyUserDepositAccess],
 			schema: {
@@ -150,7 +151,7 @@ export async function orderManagementRoutes(app: FastifyInstance) {
 	)
 
 	app.post(
-		'/om/:id/finalizar',
+		'/om/:id/separacao/finalizar',
 		{
 			onRequest: [verifyUserDepositAccess],
 			schema: {
@@ -226,5 +227,52 @@ export async function orderManagementRoutes(app: FastifyInstance) {
 			}
 		},
 		finalizeSeparation
+	)
+
+	app.patch(
+		'/om/:id/separacao/cancelar',
+		{
+			onRequest: [verifyUserDepositAccess],
+			schema: {
+				tags: ['Order Management'],
+				summary: 'Cancelar separação da OM',
+				description:
+					'Cancelar a separação de uma OM, definindo data_inicio_separacao como null',
+				security: [{ Bearer: [] }],
+				params: {
+					type: 'object',
+					required: ['id'],
+					properties: {
+						id: {
+							type: 'number',
+							description: 'Número da ordem de movimentação'
+						}
+					}
+				},
+				querystring: {
+					type: 'object',
+					required: ['kaizenIds'],
+					properties: {
+						kaizenIds: {
+							type: 'string',
+							description:
+								'IDs dos usuários Kaizen separados por vírgula (ex: 1,2,3)'
+						}
+					}
+				},
+				response: {
+					200: {
+						type: 'object',
+						properties: {
+							message: {
+								type: 'string',
+								example: 'Separação cancelada com sucesso!'
+							}
+						}
+					}
+				}
+			}
+		},
+		cancelSeparation
 	)
 }

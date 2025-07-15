@@ -3,7 +3,7 @@ import { authenticate } from '../../controllers/user/authenticate'
 
 export async function authenticateRoutes(app: FastifyInstance) {
 	app.post(
-		'/auth',
+		'/login',
 		{
 			schema: {
 				tags: ['Authentication'],

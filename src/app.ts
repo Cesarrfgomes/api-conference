@@ -59,23 +59,23 @@ app.register(fastifySwagger, {
 		],
 		tags: [
 			{
-				name: 'Authentication',
+				name: 'Autenticação',
 				description: 'Endpoint de autenticação'
 			},
 			{
-				name: 'Users',
+				name: 'Usuários',
 				description: 'Endpoints de usuários'
 			},
 			{
-				name: 'Factories',
+				name: 'Fábricas',
 				description: 'Endpoints de fábricas para cálculo de preço'
 			},
 			{
-				name: 'Calculations',
+				name: 'Cálculos',
 				description: 'Endpoints de cálculo de preços'
 			},
 			{
-				name: 'Order Management',
+				name: 'Gerenciamento de OMs',
 				description: 'Endpoints de gerenciamento de OMs'
 			}
 		]

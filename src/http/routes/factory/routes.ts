@@ -9,7 +9,7 @@ export async function factoriesRoutes(app: FastifyInstance) {
 	app.addHook('onRequest', verifyJWT)
 
 	app.post(
-		'/factories',
+		'/fabricas',
 		{
 			onRequest: [verifyUserRoutineAccess(9816)],
 			schema: {
@@ -85,7 +85,7 @@ export async function factoriesRoutes(app: FastifyInstance) {
 	)
 
 	app.get(
-		'/factories',
+		'/fabricas',
 		{
 			schema: {
 				tags: ['Factories'],
@@ -114,7 +114,7 @@ export async function factoriesRoutes(app: FastifyInstance) {
 	)
 
 	app.get(
-		'/factories/:name',
+		'/fabricas/:name',
 		{
 			onRequest: [verifyUserRoutineAccess(9816)],
 			schema: {
