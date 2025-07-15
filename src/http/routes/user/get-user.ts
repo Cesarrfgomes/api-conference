@@ -27,12 +27,17 @@ export async function userRoutes(app: FastifyInstance) {
 				},
 				response: {
 					200: {
-						type: 'array',
-						items: {
-							type: 'object',
-							properties: {
-								kaizenId: { type: 'number' },
-								winthorId: { type: 'number' }
+						type: 'object',
+						properties: {
+							users: {
+								type: 'array',
+								items: {
+									type: 'object',
+									properties: {
+										kaizenId: { type: 'number' },
+										winthorId: { type: 'number' }
+									}
+								}
 							}
 						}
 					},

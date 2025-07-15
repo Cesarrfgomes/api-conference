@@ -3,6 +3,7 @@ import { UserRepository } from '../../repositories/user-repository'
 import { OrderManagementType } from '../../types/Order-management-type'
 import { OrderManagementAlreadySeparatedError } from '../errors/order-management-already-separated-error'
 import { NotFoundOrderManagementError } from '../errors/order-management-not-found-error'
+import { SeparationNotInitiatedError } from '../errors/separation-not-initiated-error'
 import { UserUnauthorizedDepositAccessError } from '../errors/user-unauthorized-to-access-deposit-error'
 
 interface FinalizeSeparationUseCaseRequest {
@@ -28,6 +29,10 @@ export class FinalizeSeparationUseCase {
 
 		if (!om) {
 			throw new NotFoundOrderManagementError()
+		}
+
+		if (om.some(item => item.initSeparationDate === null)) {
+			throw new SeparationNotInitiatedError()
 		}
 
 		if (om.some(item => item.separated === 'S')) {
@@ -60,6 +65,16 @@ export class FinalizeSeparationUseCase {
 		await this.orderManagementRepository.updateOmSeparation(
 			omNumber,
 			updatedOm
+		)
+
+		const kaizenUsers = await this.usersRepository.findKaizenUsersByIds(
+			userKaizenIds.map(id => Number(id))
+		)
+
+		await this.orderManagementRepository.createOmOnWinthor(
+			updatedOm,
+			kaizenUsers[0].winthorUserId,
+			kaizenUsers[1]?.winthorUserId
 		)
 
 		return {

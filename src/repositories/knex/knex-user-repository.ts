@@ -39,6 +39,14 @@ export class KnexUserRepository implements UserRepository {
 		return user
 	}
 
+	async findKaizenUsersByIds(userIds: number[]) {
+		const kaizenUsers = await knexPg('usuario')
+			.select('id as kaizenId', 'chapaerp as winthorUserId')
+			.whereIn('id', userIds)
+
+		return kaizenUsers
+	}
+
 	async findKaizenUserByErpCode(
 		winthorUserId: number
 	): Promise<UserKaizenType | null> {

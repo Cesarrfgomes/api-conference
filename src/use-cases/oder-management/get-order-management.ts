@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { OrderManagementRepository } from '../../repositories/order-management-repository'
 import { UserRepository } from '../../repositories/user-repository'
 import { OrderManagementType } from '../../types/Order-management-type'
@@ -25,6 +26,8 @@ export class GetOmUseCase {
 	}: GetOmUseCaseRequest): Promise<GetOmUseCaseResponse> {
 		const om = await this.orderManagementRepository.findOmByNumber(omNumber)
 
+		console.log(om)
+
 		if (!om) {
 			throw new NotFoundOrderManagementError()
 		}
@@ -34,7 +37,6 @@ export class GetOmUseCase {
 				om.map(item => item.addressId)
 			)
 
-		// For each user, check if they have access to the OM deposit(s)
 		for (const userKaizenId of userKaizenIds) {
 			const usersDeposits =
 				await this.usersRepository.findUserDepositsByKaizenId(

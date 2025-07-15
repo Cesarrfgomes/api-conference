@@ -11,7 +11,12 @@ export interface OrderManagementRepository {
 	): Promise<void>
 	updateOmInitSeparation(
 		omNumber: number,
+		date: string,
 		omData: OrderManagementType[]
 	): Promise<void>
-	createOmOnWinthor(omData: OrderManagementType[]): Promise<void>
+	createOmOnWinthor(
+		omData: OrderManagementType[],
+		user1: number,
+		user2: number | null
+	): Promise<void>
 }

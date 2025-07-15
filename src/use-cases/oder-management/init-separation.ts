@@ -1,8 +1,10 @@
+import dayjs from 'dayjs'
 import { OrderManagementRepository } from '../../repositories/order-management-repository'
 import { UserRepository } from '../../repositories/user-repository'
 import { OrderManagementAlreadySeparatedError } from '../errors/order-management-already-separated-error'
 import { NotFoundOrderManagementError } from '../errors/order-management-not-found-error'
 import { UserUnauthorizedDepositAccessError } from '../errors/user-unauthorized-to-access-deposit-error'
+import { SeparationAlreadyInitiatedError } from '../errors/separation-already-initiated-error'
 
 interface InitSeparationUseCaseRequest {
 	omNumber: number
@@ -29,6 +31,10 @@ export class InitSeparationUseCase {
 			throw new NotFoundOrderManagementError()
 		}
 
+		if (om.some(item => item.initSeparationDate !== null)) {
+			throw new SeparationAlreadyInitiatedError()
+		}
+
 		if (om.some(item => item.separated === 'S')) {
 			throw new OrderManagementAlreadySeparatedError()
 		}
@@ -51,8 +57,11 @@ export class InitSeparationUseCase {
 			}
 		}
 
+		const initSeparationDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
+
 		await this.orderManagementRepository.updateOmInitSeparation(
 			omNumber,
+			initSeparationDate,
 			om
 		)
 

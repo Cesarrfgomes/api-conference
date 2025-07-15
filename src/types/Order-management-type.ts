@@ -6,6 +6,7 @@ export type OrderManagementType = {
 	checkedQt: number
 	addressId: number
 	separated: string
-	numeroom?: number
+	omNumber?: number
 	codfuncsep?: number
+	initSeparationDate?: string
 }

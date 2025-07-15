@@ -8,6 +8,7 @@ export interface UserRepository {
 		}[]
 	>
 	findWinthorUserById(userId: number): Promise<UserWinthorType | null>
+	findKaizenUsersByIds(userId: number[]): Promise<UserKaizenType[]>
 	findKaizenUserByErpCode(
 		winthorUserId: number
 	): Promise<UserKaizenType | null>
