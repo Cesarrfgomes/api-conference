@@ -5,22 +5,18 @@ const fs = require('fs')
 console.log('🔍 Debug Build Process...\n')
 
 try {
-	// Check if we're in the right directory
 	console.log('📁 Current directory:', process.cwd())
 
-	// Check if package.json exists
 	if (!fs.existsSync('package.json')) {
 		throw new Error('package.json not found in current directory')
 	}
 	console.log('✅ package.json found')
 
-	// Check if src/app.ts exists
 	if (!fs.existsSync('src/app.ts')) {
 		throw new Error('src/app.ts not found')
 	}
 	console.log('✅ src/app.ts found')
 
-	// Check if node_modules exists
 	if (!fs.existsSync('node_modules')) {
 		console.log('📦 Installing dependencies...')
 		execSync('npm install', { stdio: 'inherit' })
@@ -28,23 +24,19 @@ try {
 		console.log('✅ node_modules found')
 	}
 
-	// Test TypeScript compilation
 	console.log('\n🔨 Testing TypeScript compilation...')
 	execSync('npx tsc --noEmit', { stdio: 'inherit' })
 	console.log('✅ TypeScript compilation successful')
 
-	// Build the application
 	console.log('\n🔨 Building application...')
 	execSync('npm run build', { stdio: 'inherit' })
 	console.log('✅ Build successful')
 
-	// Check if dist/app.js was created
 	if (!fs.existsSync('dist/app.js')) {
 		throw new Error('dist/app.js was not created')
 	}
 	console.log('✅ dist/app.js created')
 
-	// Test running the built app
 	console.log('\n🧪 Testing built application...')
 	console.log('Starting application (will run for 5 seconds)...')
 

@@ -5,6 +5,7 @@ import { verifyUserRoutineAccess } from '../../middlewares/verify-user-routine-a
 import { verifyJWT } from '../../middlewares/verify-jwt'
 import { getFactoryById } from '../../controllers/factory/get'
 import { updateFactory } from '../../controllers/factory/update'
+import { deleteFactory } from '../../controllers/factory/delete'
 
 export async function factoriesRoutes(app: FastifyInstance) {
 	app.addHook('onRequest', verifyJWT)
@@ -247,5 +248,46 @@ export async function factoriesRoutes(app: FastifyInstance) {
 			}
 		},
 		updateFactory
+	)
+
+	app.delete(
+		'/fabricas/:id',
+		{
+			onRequest: [verifyUserRoutineAccess(9816)],
+			schema: {
+				tags: ['Fábricas'],
+				summary: 'Deletar uma fábrica',
+				description: 'Deleta uma fábrica existente pelo ID',
+				security: [{ Bearer: [] }],
+				params: {
+					type: 'object',
+					required: ['id'],
+					properties: {
+						id: { type: 'number', description: 'ID da fábrica' }
+					}
+				},
+				response: {
+					200: {
+						type: 'object',
+						properties: {
+							message: {
+								type: 'string',
+								example: 'Fábrica deletada com sucesso'
+							}
+						}
+					},
+					404: {
+						type: 'object',
+						properties: {
+							message: {
+								type: 'string',
+								example: 'Fábrica não encontrada.'
+							}
+						}
+					}
+				}
+			}
+		},
+		deleteFactory
 	)
 }

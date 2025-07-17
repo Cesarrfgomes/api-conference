@@ -22,6 +22,7 @@ export class DeleteFactoryUseCase {
 		}
 
 		await this.factoriesRepository.delete(id)
+
 		return {
 			message: 'Fábrica deletada com sucesso'
 		}
