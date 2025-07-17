@@ -6,5 +6,5 @@ export type Factory = {
 	marginf6: number
 	marginf2a: number
 	marginf2v: number
-	isActive?: string
+	isactive?: string
 }

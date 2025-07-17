@@ -17,7 +17,7 @@ export async function findFactories(
 		marginf2a: f.marginf2a,
 		marginf2v: f.marginf2v,
 		marginf6: f.marginf6,
-		isActive: f.isActive
+		isactive: f.isactive
 	}))
 
 	return reply.status(200).send({ factories })

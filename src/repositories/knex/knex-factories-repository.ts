@@ -13,7 +13,7 @@ export class KnexFactoriesRepository implements FactoriesRepository {
 				'MARGEMF2V as marginf2v',
 				'MARGEMF2A as marginf2a',
 				'ICMS as icms',
-				'ATIVO as isActive'
+				'ATIVO as isactive'
 			)
 			.where('NOME', name)
 			.first()
@@ -35,7 +35,7 @@ export class KnexFactoriesRepository implements FactoriesRepository {
 				'MARGEMF6 as marginf6',
 				'MARGEMF2A as marginf2a',
 				'MARGEMF2V as marginf2v',
-				'ATIVO as isActive'
+				'ATIVO as isactive'
 			)
 			.where('CODFABRICA', id)
 			.first()
@@ -57,7 +57,7 @@ export class KnexFactoriesRepository implements FactoriesRepository {
 				'MARGEMF6 as marginf6',
 				'MARGEMF2A as marginf2a',
 				'MARGEMF2V as marginf2v',
-				'ATIVO as isActive'
+				'ATIVO as isactive'
 			)
 			.orderBy('factoryCode', 'asc')
 
@@ -73,7 +73,7 @@ export class KnexFactoriesRepository implements FactoriesRepository {
 			marginf2a: 'MARGEMF2A',
 			marginf2v: 'MARGEMF2V',
 			marginf6: 'MARGEMF6',
-			active: 'ATIVO'
+			isactive: 'ATIVO'
 		}
 
 		function mapFieldsToOracle(data: any) {
@@ -93,7 +93,7 @@ export class KnexFactoriesRepository implements FactoriesRepository {
 			marginf2a: data.marginf2a,
 			marginf2v: data.marginf2v,
 			marginf6: data.marginf6,
-			active: 'S'
+			isactive: 'S'
 		}
 
 		await knexOracle('TABFABRICA').insert(mapFieldsToOracle(dataLowerCase))
@@ -114,7 +114,7 @@ export class KnexFactoriesRepository implements FactoriesRepository {
 			marginf2a: 'MARGEMF2A',
 			marginf2v: 'MARGEMF2V',
 			marginf6: 'MARGEMF6',
-			active: 'ATIVO'
+			isactive: 'ATIVO'
 		}
 
 		function mapFieldsToOracle(data: any) {
@@ -132,7 +132,7 @@ export class KnexFactoriesRepository implements FactoriesRepository {
 			marginf2a: data.marginf2a,
 			marginf2v: data.marginf2v,
 			marginf6: data.marginf6,
-			active: data.active
+			isactive: data.isactive
 		}
 
 		await knexOracle('TABFABRICA')
