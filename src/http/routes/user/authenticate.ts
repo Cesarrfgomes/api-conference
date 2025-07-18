@@ -1,5 +1,6 @@
 import { FastifyInstance } from 'fastify'
 import { authenticate } from '../../controllers/user/authenticate'
+import { refreshToken } from '../../controllers/user/refresh-token'
 
 export async function authenticateRoutes(app: FastifyInstance) {
 	app.post(
@@ -63,5 +64,25 @@ export async function authenticateRoutes(app: FastifyInstance) {
 			}
 		},
 		authenticate
+	)
+
+	app.patch(
+		'/token/refresh',
+		{
+			schema: {
+				tags: ['Autenticação'],
+				summary: 'Atualizar token de acesso',
+				description: 'Atualiza o token de acesso do usuário',
+				response: {
+					200: {
+						type: 'object',
+						properties: {
+							token: { type: 'string' }
+						}
+					}
+				}
+			}
+		},
+		refreshToken
 	)
 }

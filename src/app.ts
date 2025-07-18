@@ -20,15 +20,25 @@ import { NotFoundOrderManagementError } from './use-cases/errors/order-managemen
 import { NotFoundCalcProductPriceError } from './use-cases/errors/calc-not-found-error'
 import { NotFoundUserDepositsError } from './use-cases/errors/user-deposits-not-found-error'
 import { UserUnauthorizedRoutineAccessError } from './use-cases/errors/user-unauthorized-routine-access-error'
+import fastifyCookie from '@fastify/cookie'
 
 export const app = fastify()
 
-app.register(fastifyCors, { origin: '*' })
+app.register(fastifyCookie)
+
+app.register(fastifyCors, {
+	origin: '*',
+	credentials: true
+})
 
 app.register(fastifyJwt, {
 	secret: env.JWT_SECRET,
+	cookie: {
+		cookieName: 'refreshToken',
+		signed: false
+	},
 	sign: {
-		expiresIn: '3h'
+		expiresIn: '1h'
 	}
 })
 
@@ -40,7 +50,7 @@ app.register(fastifySwagger, {
 				'API para gerenciamento de conferência e cálculos de preços',
 			version: '1.0.0'
 		},
-		host: 'localhost:3333',
+		host: '10.10.10.24:3333',
 		schemes: ['http'],
 		consumes: ['application/json'],
 		produces: ['application/json'],
@@ -187,11 +197,11 @@ app.setErrorHandler((error, _, reply) => {
 })
 
 app.listen({
-	host: '0.0.0.0',
+	host: '10.10.10.24',
 	port: env.PORT
 }).then(() => {
 	console.log(`HTTP Server Started ${env.PORT}`)
 	console.log(
-		`Swagger documentation available at http://localhost:${env.PORT}/documentation`
+		`Swagger documentation available at http://10.10.10.24:${env.PORT}/documentation`
 	)
 })
