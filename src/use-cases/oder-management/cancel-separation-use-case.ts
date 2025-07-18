@@ -1,8 +1,7 @@
 import { OrderManagementRepository } from '../../repositories/order-management-repository'
 import { UserRepository } from '../../repositories/user-repository'
-import { OrderManagementType } from '../../types/Order-management-type'
-import { OrderManagementAlreadySeparatedError } from '../errors/order-management-already-separated-error'
 import { NotFoundOrderManagementError } from '../errors/order-management-not-found-error'
+import { SeparationAlreadyFinalizedError } from '../errors/separation-already-finalized-error'
 import { SeparationNotInitiatedError } from '../errors/separation-not-initiated-error'
 import { UserUnauthorizedDepositAccessError } from '../errors/user-unauthorized-to-access-deposit-error'
 
@@ -31,8 +30,18 @@ export class CancelSeparationUseCase {
 			throw new NotFoundOrderManagementError()
 		}
 
-		if (om.some(item => item.initSeparationDate === null)) {
+		const dosSeparationInit = om.some(
+			item => item.initSeparationDate === null
+		)
+
+		const doesSeparationFinalized = om.some(item => item.separated === 'S')
+
+		if (dosSeparationInit) {
 			throw new SeparationNotInitiatedError()
+		}
+
+		if (doesSeparationFinalized) {
+			throw new SeparationAlreadyFinalizedError()
 		}
 
 		const omDeposits =

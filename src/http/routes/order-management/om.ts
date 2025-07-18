@@ -5,9 +5,11 @@ import { initSeparation } from '../../controllers/order-management/init-separati
 import { verifyJWT } from '../../middlewares/verify-jwt'
 import { verifyUserDepositAccess } from '../../middlewares/verify-user-deposit'
 import { cancelSeparation } from '../../controllers/order-management/cancel-separation'
+import { verifyUserRoutineAccess } from '../../middlewares/verify-user-routine-access'
 
 export async function orderManagementRoutes(app: FastifyInstance) {
 	app.addHook('onRequest', verifyJWT)
+	app.addHook('onRequest', verifyUserRoutineAccess(9818))
 
 	app.get(
 		'/om/:id',
