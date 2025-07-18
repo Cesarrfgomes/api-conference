@@ -50,7 +50,7 @@ app.register(fastifySwagger, {
 				'API para gerenciamento de conferência e cálculos de preços',
 			version: '1.0.0'
 		},
-		host: '10.10.10.24:3333',
+		host: 'localhost:3333',
 		schemes: ['http'],
 		consumes: ['application/json'],
 		produces: ['application/json'],
@@ -119,78 +119,15 @@ app.register(calcProductPriceRoutes)
 app.setErrorHandler((error, _, reply) => {
 	if (error instanceof ZodError) {
 		return reply.status(400).send({
-			message: 'Validation error.',
+			message: 'Validation error:',
 			issues: error.format()
 		})
 	}
 
-	if (error instanceof InvalidCredentialsError) {
-		return reply.status(401).send({
-			message: error.message
-		})
-	}
-
-	if (error instanceof NotFoundUserError) {
-		return reply.status(404).send({
-			message: error.message
-		})
-	}
-
-	if (error instanceof FactoryAlreadyExistsError) {
-		return reply.status(409).send({
-			message: error.message
-		})
-	}
-
-	if (error instanceof NotFoundFactoryError) {
-		return reply.status(404).send({
-			message: error.message
-		})
-	}
-
-	if (error instanceof MaximumUsersInAPartitionError) {
-		return reply.status(400).send({
-			message: error.message
-		})
-	}
-
-	if (error instanceof UserUnauthorizedDepositAccessError) {
-		return reply.status(403).send({
-			message: error.message
-		})
-	}
-
-	if (error instanceof UserUnauthorizedRoutineAccessError) {
-		return reply.status(403).send({
-			message: error.message
-		})
-	}
-
-	if (error instanceof NotFoundOrderManagementError) {
-		return reply.status(404).send({
-			message: error.message
-		})
-	}
-
-	if (error instanceof NotFoundCalcProductPriceError) {
-		return reply.status(404).send({
-			message: error.message
-		})
-	}
-
-	if (error instanceof NotFoundUserDepositsError) {
-		return reply.status(404).send({
-			message: error.message
-		})
-	}
-
 	if (env.NODE_ENV !== 'prod') {
-		console.error(env.NODE_ENV, error)
-
-		return reply.send(error)
+		console.error(error)
 	} else {
 		// TODO: Here we should log to an external tool like DataDog/NewRelic/Sentry
-		console.error('Internal server error:', error)
 	}
 
 	return reply.status(500).send({ message: 'Internal server error.' })

@@ -87,7 +87,7 @@ export class KnexUserRepository implements UserRepository {
 			.where('USUARIOBD', username)
 			.first()
 
-		if (!user) {
+		if (!user || user.length === 0) {
 			return null
 		}
 

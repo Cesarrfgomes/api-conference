@@ -21,14 +21,14 @@ export class AuthenticateUseCase {
 		const winthorUser =
 			await this.usersRepository.findWinthorUserByUsername(username)
 
+		if (!winthorUser) {
+			throw new InvalidCredentialsError()
+		}
+
 		const decryptPassword =
 			await this.usersRepository.getWinthorUserPasswordByUsername(
 				username
 			)
-
-		if (!winthorUser) {
-			throw new InvalidCredentialsError()
-		}
 
 		const doesPasswordMatches = decryptPassword === password.toUpperCase()
 
