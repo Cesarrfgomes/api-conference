@@ -197,11 +197,11 @@ app.setErrorHandler((error, _, reply) => {
 })
 
 app.listen({
-	host: '10.10.10.24',
+	host: '0.0.0.0',
 	port: env.PORT
 }).then(() => {
 	console.log(`HTTP Server Started ${env.PORT}`)
 	console.log(
-		`Swagger documentation available at http://10.10.10.24:${env.PORT}/documentation`
+		`Swagger documentation available at http://localhost:${env.PORT}/documentation`
 	)
 })
