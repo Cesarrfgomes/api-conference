@@ -29,8 +29,6 @@ app.register(fastifyCors, {
 	credentials: true
 })
 
-app.register(fastifyCookie)
-
 app.register(fastifyJwt, {
 	secret: env.JWT_SECRET,
 	cookie: {
@@ -41,6 +39,8 @@ app.register(fastifyJwt, {
 		expiresIn: '1m'
 	}
 })
+
+app.register(fastifyCookie)
 
 app.register(fastifySwagger, {
 	swagger: {
