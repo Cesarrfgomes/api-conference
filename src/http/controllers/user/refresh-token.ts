@@ -26,7 +26,7 @@ export async function refreshToken(
 	return reply
 		.setCookie('refreshToken', refreshToken, {
 			path: '/token/refresh',
-			httpOnly: true,
+			httpOnly: false,
 			secure: true,
 			sameSite: true
 		})
