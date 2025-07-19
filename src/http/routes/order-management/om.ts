@@ -8,13 +8,14 @@ import { cancelSeparation } from '../../controllers/order-management/cancel-sepa
 import { verifyUserRoutineAccess } from '../../middlewares/verify-user-routine-access'
 
 export async function orderManagementRoutes(app: FastifyInstance) {
-	app.addHook('onRequest', verifyJWT)
-	app.addHook('onRequest', verifyUserRoutineAccess(9818))
-
 	app.get(
 		'/om/:id',
 		{
-			onRequest: [verifyUserDepositAccess],
+			onRequest: [
+				verifyJWT,
+				verifyUserRoutineAccess(9818),
+				verifyUserDepositAccess
+			],
 			schema: {
 				tags: ['Gerenciamento de OMs'],
 				summary: 'Buscar ordem de movimentação por número',
@@ -89,7 +90,11 @@ export async function orderManagementRoutes(app: FastifyInstance) {
 	app.post(
 		'/om/:id/separacao/iniciar',
 		{
-			onRequest: [verifyUserDepositAccess],
+			onRequest: [
+				verifyJWT,
+				verifyUserRoutineAccess(9818),
+				verifyUserDepositAccess
+			],
 			schema: {
 				tags: ['Gerenciamento de OMs'],
 				summary: 'Iniciar separação da OM',
@@ -155,7 +160,11 @@ export async function orderManagementRoutes(app: FastifyInstance) {
 	app.post(
 		'/om/:id/separacao/finalizar',
 		{
-			onRequest: [verifyUserDepositAccess],
+			onRequest: [
+				verifyJWT,
+				verifyUserRoutineAccess(9818),
+				verifyUserDepositAccess
+			],
 			schema: {
 				tags: ['Gerenciamento de OMs'],
 				summary: 'Finalizar separação da OM',
@@ -234,7 +243,11 @@ export async function orderManagementRoutes(app: FastifyInstance) {
 	app.patch(
 		'/om/:id/separacao/cancelar',
 		{
-			onRequest: [verifyUserDepositAccess],
+			onRequest: [
+				verifyJWT,
+				verifyUserRoutineAccess(9818),
+				verifyUserDepositAccess
+			],
 			schema: {
 				tags: ['Gerenciamento de OMs'],
 				summary: 'Cancelar separação da OM',

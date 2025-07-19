@@ -9,19 +9,19 @@ export async function refreshToken(
 	const { sub, kaizenId } = request.user
 
 	const token = await reply.jwtSign({
-		sign: {
-			sub,
-			kaizenId
-		}
+		sub,
+		kaizenId
 	})
 
-	const refreshToken = await reply.jwtSign({
-		sign: {
+	const refreshToken = await reply.jwtSign(
+		{
 			sub,
-			kaizenId,
+			kaizenId
+		},
+		{
 			expiresIn: '7d'
 		}
-	})
+	)
 
 	return reply
 		.setCookie('refreshToken', refreshToken, {

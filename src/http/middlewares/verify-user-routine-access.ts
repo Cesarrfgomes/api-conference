@@ -5,6 +5,8 @@ export function verifyUserRoutineAccess(routine: number) {
 	return async (request: FastifyRequest, reply: FastifyReply) => {
 		const { sub } = request.user
 
+		console.log(sub)
+
 		const doesUserHaveRoutineAccess = await knexOracle('PCCONTRO')
 			.select('ACESSO as access')
 			.where('CODROTINA', routine)

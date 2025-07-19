@@ -17,6 +17,7 @@ export const verifyJWT = async (
 			const code = (err as any).code
 			const message = (err as any).message
 			const statusCode = (err as any).statusCode
+
 			if (code === 'FST_JWT_AUTHORIZATION_TOKEN_EXPIRED') {
 				return reply.status(401).send({
 					message,

@@ -26,19 +26,19 @@ export async function authenticate(
 		console.log(winthorUser)
 
 		const token = await reply.jwtSign({
-			sign: {
-				sub: winthorUser.winthorUserId,
-				kaizenId: kaizenUser?.kaizenUserId
-			}
+			sub: winthorUser.winthorUserId,
+			kaizenId: kaizenUser?.kaizenUserId
 		})
 
-		const refreshToken = await reply.jwtSign({
-			sign: {
+		const refreshToken = await reply.jwtSign(
+			{
 				sub: winthorUser.winthorUserId,
-				kaizenId: kaizenUser?.kaizenUserId,
+				kaizenId: kaizenUser?.kaizenUserId
+			},
+			{
 				expiresIn: '7d'
 			}
-		})
+		)
 
 		return reply
 			.setCookie('refreshToken', refreshToken, {
