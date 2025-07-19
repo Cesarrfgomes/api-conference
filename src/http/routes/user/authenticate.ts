@@ -29,20 +29,12 @@ export async function authenticateRoutes(app: FastifyInstance) {
 					200: {
 						type: 'object',
 						properties: {
-							winthorUser: {
+							user: {
 								type: 'object',
 								properties: {
 									winthorUserId: { type: 'number' },
-									username: { type: 'string' }
-								}
-							},
-							kaizenUser: {
-								type: 'object',
-								properties: {
 									kaizenUserId: { type: 'number' },
-									name: { type: 'string' },
-									kaizenUsername: { type: 'string' },
-									isActive: { type: 'string' }
+									name: { type: 'string' }
 								}
 							},
 							token: {

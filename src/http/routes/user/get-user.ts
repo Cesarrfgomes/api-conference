@@ -8,7 +8,6 @@ export async function userRoutes(app: FastifyInstance) {
 	app.get(
 		'/usuarios/cracha',
 		{
-			onRequest: [verifyJWT],
 			schema: {
 				tags: ['Usuários'],
 				summary: 'Buscar usuários por seus crachás',

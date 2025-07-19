@@ -24,12 +24,12 @@ import fastifyCookie from '@fastify/cookie'
 
 export const app = fastify()
 
-app.register(fastifyCookie)
-
 app.register(fastifyCors, {
 	origin: '*',
 	credentials: true
 })
+
+app.register(fastifyCookie)
 
 app.register(fastifyJwt, {
 	secret: env.JWT_SECRET,
@@ -38,7 +38,7 @@ app.register(fastifyJwt, {
 		signed: false
 	},
 	sign: {
-		expiresIn: '1h'
+		expiresIn: '1m'
 	}
 })
 
@@ -119,15 +119,78 @@ app.register(calcProductPriceRoutes)
 app.setErrorHandler((error, _, reply) => {
 	if (error instanceof ZodError) {
 		return reply.status(400).send({
-			message: 'Validation error:',
+			message: 'Validation error.',
 			issues: error.format()
 		})
 	}
 
+	if (error instanceof InvalidCredentialsError) {
+		return reply.status(401).send({
+			message: error.message
+		})
+	}
+
+	if (error instanceof NotFoundUserError) {
+		return reply.status(404).send({
+			message: error.message
+		})
+	}
+
+	if (error instanceof FactoryAlreadyExistsError) {
+		return reply.status(409).send({
+			message: error.message
+		})
+	}
+
+	if (error instanceof NotFoundFactoryError) {
+		return reply.status(404).send({
+			message: error.message
+		})
+	}
+
+	if (error instanceof MaximumUsersInAPartitionError) {
+		return reply.status(400).send({
+			message: error.message
+		})
+	}
+
+	if (error instanceof UserUnauthorizedDepositAccessError) {
+		return reply.status(403).send({
+			message: error.message
+		})
+	}
+
+	if (error instanceof UserUnauthorizedRoutineAccessError) {
+		return reply.status(403).send({
+			message: error.message
+		})
+	}
+
+	if (error instanceof NotFoundOrderManagementError) {
+		return reply.status(404).send({
+			message: error.message
+		})
+	}
+
+	if (error instanceof NotFoundCalcProductPriceError) {
+		return reply.status(404).send({
+			message: error.message
+		})
+	}
+
+	if (error instanceof NotFoundUserDepositsError) {
+		return reply.status(404).send({
+			message: error.message
+		})
+	}
+
 	if (env.NODE_ENV !== 'prod') {
-		console.error(error)
+		console.error(env.NODE_ENV, error)
+
+		return reply.send(error)
 	} else {
 		// TODO: Here we should log to an external tool like DataDog/NewRelic/Sentry
+		console.error('Internal server error:', error)
 	}
 
 	return reply.status(500).send({ message: 'Internal server error.' })

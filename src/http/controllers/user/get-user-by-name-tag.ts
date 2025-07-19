@@ -13,6 +13,8 @@ export async function getUserByNameTag(
 
 	const { nameTags } = getUserByNameTagQuerySchema.parse(request.query)
 
+	console.log(request.user)
+
 	if (nameTags) {
 		try {
 			const getUser = makeGetUserByNameTagUseCase()

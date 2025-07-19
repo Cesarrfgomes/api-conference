@@ -40,6 +40,8 @@ export class AuthenticateUseCase {
 			winthorUser.winthorUserId
 		)
 
+		// console.log(winthorUser)
+
 		return { winthorUser, kaizenUser }
 	}
 }

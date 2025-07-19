@@ -26,8 +26,6 @@ export class GetOmUseCase {
 	}: GetOmUseCaseRequest): Promise<GetOmUseCaseResponse> {
 		const om = await this.orderManagementRepository.findOmByNumber(omNumber)
 
-		console.log(om)
-
 		if (!om) {
 			throw new NotFoundOrderManagementError()
 		}

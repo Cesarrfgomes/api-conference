@@ -14,7 +14,7 @@ export async function orderManagementRoutes(app: FastifyInstance) {
 	app.get(
 		'/om/:id',
 		{
-			onRequest: [verifyJWT, verifyUserDepositAccess],
+			onRequest: [verifyUserDepositAccess],
 			schema: {
 				tags: ['Gerenciamento de OMs'],
 				summary: 'Buscar ordem de movimentação por número',

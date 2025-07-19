@@ -23,31 +23,39 @@ export async function authenticate(
 			username,
 			password
 		})
+		console.log(winthorUser)
 
 		const token = await reply.jwtSign({
-			sub: winthorUser.winthorUserId,
-			kaizenId: kaizenUser?.kaizenUserId
-		})
-
-		const refreshToken = await reply.jwtSign(
-			{
+			sign: {
 				sub: winthorUser.winthorUserId,
 				kaizenId: kaizenUser?.kaizenUserId
-			},
-			{
+			}
+		})
+
+		const refreshToken = await reply.jwtSign({
+			sign: {
+				sub: winthorUser.winthorUserId,
+				kaizenId: kaizenUser?.kaizenUserId,
 				expiresIn: '7d'
 			}
-		)
+		})
 
 		return reply
 			.setCookie('refreshToken', refreshToken, {
 				path: '/',
-				secure: false,
+				secure: true,
 				sameSite: true,
 				httpOnly: true
 			})
 			.status(200)
-			.send({ winthorUser, kaizenUser, token })
+			.send({
+				user: {
+					winthorUserId: winthorUser.winthorUserId,
+					kaizenUserId: kaizenUser?.kaizenUserId,
+					name: winthorUser.name
+				},
+				token
+			})
 	} catch (err) {
 		if (err instanceof InvalidCredentialsError) {
 			return reply.status(403).send({ message: err.message })
